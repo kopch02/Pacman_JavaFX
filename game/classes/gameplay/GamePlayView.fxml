@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameplay.GamePlayController">
+   <children>
+      <ImageView fx:id="up" fitHeight="28.0" fitWidth="23.0" layoutX="421.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
