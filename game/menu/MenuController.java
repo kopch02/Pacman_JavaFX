@@ -5,9 +5,9 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 public class MenuController {
     @FXML
@@ -15,19 +15,15 @@ public class MenuController {
 
     @FXML
     TextField playerName;
+
+    @FXML
+    AnchorPane mainRoot;
     
     @FXML
-    public void letsGo(ActionEvent actionEvent) {
-        try {
-            loadFXML();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static Parent loadFXML() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource("../gameplay/GamePlayView.fxml"));
-        return fxmlLoader.load();
+    public void letsGo(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../gameplay/GamePlayView.fxml"));
+        AnchorPane pane = fxmlLoader.load();
+        mainRoot.getChildren().setAll(pane);
     }
 
 }
