@@ -2,43 +2,64 @@ package entity.entity.player;
 
 import java.io.File;
 
+import entity.entity.Entity;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-public class Player extends ImageView{
-/* 
-    private ImageView pacman;
+public class Player extends Entity {
 
-    private int pacman_x = 8, pacman_y = 8;
-    public Image upImage, downImage, leftImage, rightImage;
+    Image upImage;
+    Image downImage;
+    Image leftImage;
+    Image rightImage;
 
-    public Player(ImageView imgv) {
-        upImage = new Image(new File("../../../../other/up.gif").toURI().toString());
-        downImage = new Image(new File("../../../../other/down.gif").toURI().toString());
-        leftImage = new Image(new File("../../../../other/left.gif").toURI().toString());
-        rightImage = new Image(new File("../../../../other/right.gif").toURI().toString());
-        this.pacman = new ImageView(upImage);
-        imgv = this.pacman;
+    public static enum DIRECTION {
+        up, down, left, right
+    }
+
+    public Player(Image entityImage) {
+        super(entityImage);
+        upImage = super.getImage();
+        
+        downImage = new Image(new File("other/down.gif").toURI().toString());
+        leftImage = new Image(new File("other/left.gif").toURI().toString());
+        rightImage = new Image(new File("other/right.gif").toURI().toString());
+    }
+
+    public void updateImage(DIRECTION value) {
+        if (value == DIRECTION.up) {
+            this.entityImage = upImage;
+        } else if (value == DIRECTION.down) {
+            this.entityImage = downImage;
+        } else if (value == DIRECTION.left) {
+            this.entityImage = leftImage;
+        } else {
+            this.entityImage = rightImage;
+        }
     }
 
     public void moveUp() {
-        this.pacman.setImage(upImage);
-        this.pacman.setTranslateY(this.pacman.getTranslateY() - pacman_y);
+        updateImage(DIRECTION.up);
+        Point2D curPos = this.getDrawPosition();
+        this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() - 1);
     }
 
     public void moveDown() {
-        this.pacman.setImage(downImage);
-        this.pacman.setTranslateY(this.pacman.getTranslateY() + pacman_y);
+        updateImage(DIRECTION.down);
+        Point2D curPos = this.getDrawPosition();
+        this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() + 1);
     }
 
     public void moveLeft() {
-        this.pacman.setImage(leftImage);
-        this.pacman.setTranslateX(this.pacman.getTranslateX() - pacman_x);
+        updateImage(DIRECTION.left);
+        Point2D curPos = this.getDrawPosition();
+        this.setDrawPosition((float) curPos.getX() - 1, (float) curPos.getY());
     }
 
     public void moveRight() {
-        this.pacman.setImage(rightImage);
-        this.pacman.setTranslateX(this.pacman.getTranslateX() + pacman_x);
+        updateImage(DIRECTION.right);
+        Point2D curPos = this.getDrawPosition();
+        this.setDrawPosition((float) curPos.getX() + 1, (float) curPos.getY());
     }
-*/
+
 }
