@@ -8,6 +8,8 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
+import gameplay.KeyPolling;
+
 public class Main extends Application{
     public static void main(String[] args) {
         launch();
@@ -21,6 +23,7 @@ public class Main extends Application{
         stage.show();
         stage.setResizable(false);
         stage.centerOnScreen();
+        KeyPolling.getInstance().pollScene(scene);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent e) {
                 System.out.println("Shutting down");

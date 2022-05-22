@@ -1,77 +1,62 @@
 package gameplay;
 
 import java.io.File;
-import java.io.IOException;
 
-import javafx.event.ActionEvent;
+import entity.entity.player.Player;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
-
 public class GamePlayController {
-    @FXML
-    private ImageView pacman;
 
     @FXML
-    private AnchorPane mainRoot;
-    
+    public AnchorPane mainRoot;
 
-    private int pacman_x = 8, pacman_y = 8;
-    public Image upImage, downImage, leftImage, rightImage;
+    @FXML
+    public Canvas gameCanvas;
 
-    public void initialize() throws IOException {
-        upImage = new Image(new File("/../../other/up.gif").toURI().toString());
-        downImage = new Image(new File("/../../other/down.gif").toURI().toString());
-        leftImage = new Image(new File("/../../other/left.gif").toURI().toString());
-        rightImage = new Image(new File("/../../other/right.gif").toURI().toString());
-        pacman.setImage(upImage);
+    KeyPolling keys = KeyPolling.getInstance();
+
+    private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()));
+
+    private void initializeCanvas() {
+        gameCanvas.widthProperty().bind(mainRoot.widthProperty());
+        gameCanvas.heightProperty().bind(mainRoot.heightProperty());
+    }
+
+    public void initialize() {
         mainRoot.setFocusTraversable(true);
+        initializeCanvas();
+        player.setDrawPosition(380, 300);
+        player.setScale(1.5f);
 
+        Renderer renderer = new Renderer(this.gameCanvas);
+        renderer.addEntity(player);
+        renderer.setBackground(new Image(new File("other/map.png").toURI().toString()));
+
+        GameLoopTimer timer = new GameLoopTimer() {
+            @Override
+            public void tick(float secondsSinceLastFrame) {
+                renderer.prepare();
+                updatePlayerMovement(secondsSinceLastFrame);
+                renderer.render();
+            }
+        };
+        timer.start();
     }
 
-    @FXML
-    public void kek(ActionEvent actionEvent) {
-        this.pacman.setImage(leftImage);
-    }
-
-    public void getKeyboardInput(KeyEvent e) {
-        switch (e.getCode()) {
-            case A:
-                moveLeft();
-                break;
-            case D:
-                moveRight();
-                break;
-            case S:
-                moveDown();
-                break;
-            case W:
-                moveUp();
-                break;
+    private void updatePlayerMovement(float frameDuration) {
+        if (keys.isDown(KeyCode.W)) {
+            player.moveUp();
+        } else if (keys.isDown(KeyCode.S)) {
+            player.moveDown();
+        } else if (keys.isDown(KeyCode.A)) {
+            player.moveLeft();
+        } else if (keys.isDown(KeyCode.D)) {
+            player.moveRight();
         }
-    }
-
-    public void moveUp() {
-        this.pacman.setImage(upImage);
-        this.pacman.setTranslateY(this.pacman.getTranslateY() - pacman_y);
-    }
-
-    public void moveDown() {
-        this.pacman.setImage(downImage);
-        this.pacman.setTranslateY(this.pacman.getTranslateY() + pacman_y);
-    }
-
-    public void moveLeft() {
-        this.pacman.setImage(leftImage);
-        this.pacman.setTranslateX(this.pacman.getTranslateX() - pacman_x);
-    }
-
-    public void moveRight() {
-        this.pacman.setImage(rightImage);
-        this.pacman.setTranslateX(this.pacman.getTranslateX() + pacman_x);
     }
 
 }
