@@ -39,24 +39,28 @@ public class Player extends Entity {
     }
 
     public void moveUp() {
+        checAllowedToMove("up");
         updateImage(DIRECTION.up);
         Point2D curPos = this.getDrawPosition();
         this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() - 1);
     }
 
     public void moveDown() {
+        checAllowedToMove("down");
         updateImage(DIRECTION.down);
         Point2D curPos = this.getDrawPosition();
         this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() + 1);
     }
 
     public void moveLeft() {
+        checAllowedToMove("left");
         updateImage(DIRECTION.left);
         Point2D curPos = this.getDrawPosition();
         this.setDrawPosition((float) curPos.getX() - 1, (float) curPos.getY());
     }
 
     public void moveRight() {
+        checAllowedToMove("right");
         updateImage(DIRECTION.right);
         Point2D curPos = this.getDrawPosition();
         this.setDrawPosition((float) curPos.getX() + 1, (float) curPos.getY());

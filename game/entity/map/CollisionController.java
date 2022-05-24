@@ -85,13 +85,13 @@ public class CollisionController extends Application {
   public static void main(String[] args) { launch(args); }
 
   @Override public void start(Stage primaryStage) throws IOException{
-    FXMLLoader fxmlLoader = new FXMLLoader(CollisionController.class.getResource("map.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(CollisionController.class.getResource("game\\gameplay\\GamePlayView.fxml"));
     Scene scene=new Scene(fxmlLoader.load(),660,650);
     primaryStage.setTitle("Packman???");
     Group root = new Group();
 
     sprites = new ArrayList<>();
-    fill(sprites);
+    //fill(sprites);
     
     
     root.getChildren().addAll(sprites);
@@ -100,7 +100,7 @@ public class CollisionController extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
+/*
   private void fill(ArrayList sprites){
       sprites.add(rectangle1);
       sprites.add(rectangle2);
@@ -135,7 +135,7 @@ public class CollisionController extends Application {
       sprites.add(rectangle31);
 
   }
-
+*/
   private void checkShapeIntersection(Shape block) {
     boolean collisionDetected = false;
     for (Shape player : sprites) {
