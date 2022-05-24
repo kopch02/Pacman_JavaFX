@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.*;
 import entity.map.GameMap;
+import java.util.ArrayList;
 
 public class Entity {
     protected Point2D position;
@@ -22,7 +23,7 @@ public class Entity {
         this.height = entityImage.getHeight();
     }
 
-    public Rectangle getSprite(){
+    public Rectangle getSprite() {
         Point2D pos = getDrawPosition();
         Rectangle entity_sprate = new Rectangle();
         entity_sprate.setWidth(getWidth());
@@ -30,30 +31,6 @@ public class Entity {
         entity_sprate.setLayoutX(pos.getX());
         entity_sprate.setLayoutY(pos.getY());
         return entity_sprate;
-    }
-
-    public void checAllowedToMove(String side){
-        
-        Point2D pos = getDrawPosition();
-        collisionDetected=gamemap.checkShapeIntersection(getSprite());
-        if (collisionDetected ){
-            if (side == "left"){
-                collisionDetected=false;
-                setDrawPosition((float) pos.getX()+3, (float) pos.getY()); 
-            }
-            else if (side == "right"){
-                collisionDetected=false;
-                setDrawPosition((float) pos.getX()-3, (float) pos.getY());
-            }
-            else if (side == "up"){
-                collisionDetected=false;
-                setDrawPosition((float) pos.getX(), (float) pos.getY()+3);
-            }
-            else if (side == "down"){
-                collisionDetected=false;
-                setDrawPosition((float) pos.getX(), (float) pos.getY()-3);
-            }
-        }
     }
 
     public Point2D getDrawPosition() {
@@ -93,13 +70,13 @@ public class Entity {
         return this.height * getScale();
     }
 
-    public double layx() {
+    public ArrayList<Double> getcoords() {
+        ArrayList<Double> coords = new ArrayList<>();
         Point2D pos = getDrawPosition();
-        return pos.getX();
-    }
-
-    public double layy() {
-        Point2D pos = getDrawPosition();
-        return pos.getY();
+        coords.add((double) pos.getX());
+        coords.add((double) pos.getY());
+        coords.add((double) (pos.getX() + this.width * getScale()));
+        coords.add((double) (pos.getY() + this.height * getScale()));
+        return coords;
     }
 }

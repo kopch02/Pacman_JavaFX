@@ -7,9 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
-import entity.map.GameMap;
 
 public class GamePlayController {
 
@@ -20,8 +18,6 @@ public class GamePlayController {
     public Canvas gameCanvas;
 
     KeyPolling keys = KeyPolling.getInstance();
-
-    GameMap gamemap = new GameMap();
 
     private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()));
 
@@ -39,7 +35,6 @@ public class GamePlayController {
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.addEntity(player);
         renderer.setBackground(new Image(new File("other/map.png").toURI().toString()));
-        GraphicsContext context = gameCanvas.getGraphicsContext2D();
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -47,8 +42,6 @@ public class GamePlayController {
                 renderer.prepare();
                 updatePlayerMovement(secondsSinceLastFrame);
                 renderer.render();
-                //gamemap.create(context);
-                //context.fillRect(player.layx(), player.layy(), player.getWidth(), player.getHeight());
             }
         };
         timer.start();
