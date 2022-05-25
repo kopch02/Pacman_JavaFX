@@ -8,8 +8,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.canvas.GraphicsContext;//под отображение
+import entity.map.GameMap;//под отображение
 
 public class GamePlayController {
+    GameMap gamemap = new GameMap();//под отображение
 
     @FXML
     public AnchorPane mainRoot;
@@ -29,12 +32,13 @@ public class GamePlayController {
     public void initialize() {
         mainRoot.setFocusTraversable(true);
         initializeCanvas();
-        player.setDrawPosition(350, 285);
-        player.setScale(1.4f);
+        player.setDrawPosition(330, 285);
+        player.setScale(1.0f);
 
         Renderer renderer = new Renderer(this.gameCanvas);
+        renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
+        GraphicsContext context = gameCanvas.getGraphicsContext2D();//под отображение
         renderer.addEntity(player);
-        renderer.setBackground(new Image(new File("other/map.png").toURI().toString()));
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -42,6 +46,8 @@ public class GamePlayController {
                 renderer.prepare();
                 updatePlayerMovement(secondsSinceLastFrame);
                 renderer.render();
+                gamemap.create(context);//под отображение
+                context.fillRect(player.layx(), player.layy(), player.getWidth(), player.getHeight());//под отображение
             }
         };
         timer.start();
