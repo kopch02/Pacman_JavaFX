@@ -17,7 +17,7 @@ public class GameMap {
 
         nodes.add(new Rectangle(55, 140, 80, 20));// rec6
         nodes.add(new Rectangle(175, 140, 30, 150));// rec7
-        nodes.add(new Rectangle(205, 200, 70, 25));// rec8
+        nodes.add(new Rectangle(205, 200, 75, 25));// rec8
         nodes.add(new Rectangle(245, 140, 175, 20));// rec9
         nodes.add(new Rectangle(320, 160, 30, 65));// rec10
         nodes.add(new Rectangle(390, 200, 75, 25));// rec11
@@ -25,7 +25,7 @@ public class GameMap {
         nodes.add(new Rectangle(540, 140, 75, 20));// rec13
 
         nodes.add(new Rectangle(175, 330, 30, 85));// rec14
-        nodes.add(new Rectangle(245, 390, 175, 25));// rec15
+        nodes.add(new Rectangle(245, 390, 180, 25));// rec15
         nodes.add(new Rectangle(465, 330, 35, 85));// rec16
         nodes.add(new Rectangle(320, 415, 30, 60));// rec17
 
