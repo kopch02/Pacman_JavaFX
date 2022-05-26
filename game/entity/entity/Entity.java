@@ -2,7 +2,7 @@ package entity.entity;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Rectangle;
 import entity.map.GameMap;
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ public class Entity {
     double width;
     double height;
     boolean collisionDetected;
+    boolean isMoving = false;
     GameMap gamemap = new GameMap();
 
     protected Image entityImage;
@@ -25,12 +26,12 @@ public class Entity {
 
     public Rectangle getSprite() {
         Point2D pos = getDrawPosition();
-        Rectangle entity_sprate = new Rectangle();
-        entity_sprate.setWidth(getWidth());
-        entity_sprate.setHeight(getHeight());
-        entity_sprate.setLayoutX(pos.getX());
-        entity_sprate.setLayoutY(pos.getY());
-        return entity_sprate;
+        Rectangle entity_sprite = new Rectangle();
+        entity_sprite.setWidth(getWidth());
+        entity_sprite.setHeight(getHeight());
+        entity_sprite.setLayoutX(pos.getX());
+        entity_sprite.setLayoutY(pos.getY());
+        return entity_sprite;
     }
 
     public Point2D getDrawPosition() {
@@ -79,12 +80,22 @@ public class Entity {
         coords.add((double) (pos.getY() + this.height * getScale()));
         return coords;
     }
-    //под отображение
+
+    public boolean isMoving() {
+        return this.isMoving;
+    }
+
+    public void setMove(boolean t) {
+        this.isMoving = t;
+    }
+
+    // под отображение
     public double layx() {
         Point2D pos = getDrawPosition();
         return pos.getX();
     }
-    //под отображение
+
+    // под отображение
     public double layy() {
         Point2D pos = getDrawPosition();
         return pos.getY();

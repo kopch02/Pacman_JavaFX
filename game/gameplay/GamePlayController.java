@@ -3,6 +3,7 @@ package gameplay;
 import java.io.File;
 
 import entity.entity.player.Player;
+import entity.entity.player.Player.DIRECTION;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -12,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;//под отображение
 import entity.map.GameMap;//под отображение
 
 public class GamePlayController {
-    GameMap gamemap = new GameMap();//под отображение
+    GameMap gamemap = new GameMap();// под отображение
 
     @FXML
     public AnchorPane mainRoot;
@@ -34,34 +35,36 @@ public class GamePlayController {
         initializeCanvas();
         player.setDrawPosition(330, 285);
         player.setScale(1.0f);
+        player.setMove(true);
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
-        GraphicsContext context = gameCanvas.getGraphicsContext2D();//под отображение
+        GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
         renderer.addEntity(player);
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
             public void tick(float secondsSinceLastFrame) {
                 renderer.prepare();
-                updatePlayerMovement(secondsSinceLastFrame);
+                updatePlayerMovement();
+                player.update(player.getCurDirection());
                 renderer.render();
-                gamemap.create(context);//под отображение
-                context.fillRect(player.layx(), player.layy(), player.getWidth(), player.getHeight());//под отображение
+                //gamemap.create(context);// под отображение
+                
             }
         };
         timer.start();
     }
 
-    private void updatePlayerMovement(float frameDuration) {
+    private void updatePlayerMovement() {
         if (keys.isDown(KeyCode.W)) {
-            player.moveUp();
+            player.setDirection(DIRECTION.up);
         } else if (keys.isDown(KeyCode.S)) {
-            player.moveDown();
+            player.setDirection(DIRECTION.down);
         } else if (keys.isDown(KeyCode.A)) {
-            player.moveLeft();
+            player.setDirection(DIRECTION.left);
         } else if (keys.isDown(KeyCode.D)) {
-            player.moveRight();
+            player.setDirection(DIRECTION.right);
         }
     }
 

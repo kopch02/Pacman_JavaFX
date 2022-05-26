@@ -5,7 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 public abstract class GameLoopTimer extends AnimationTimer {
-    
+
     long pauseStart;
     long animationStart;
     DoubleProperty animationDuration = new SimpleDoubleProperty(0L);
@@ -90,6 +90,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
             tick(secondsSinceLastFrame);
         }
     }
-    
+
     public abstract void tick(float secondsSinceLastFrame);
 }
