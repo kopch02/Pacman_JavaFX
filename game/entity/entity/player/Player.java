@@ -3,6 +3,8 @@ package entity.entity.player;
 import java.io.File;
 
 import entity.entity.Entity;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import entity.map.GameMap;
@@ -13,6 +15,8 @@ public class Player extends Entity {
     Image downImage;
     Image leftImage;
     Image rightImage;
+    DIRECTION curDir;
+    float speed = 1;
 
     GameMap gamemap = new GameMap();
 
@@ -29,48 +33,61 @@ public class Player extends Entity {
         rightImage = new Image(new File("other/right.gif").toURI().toString());
     }
 
-    public void updateImage(DIRECTION value) {
-        if (value == DIRECTION.up) {
-            this.entityImage = upImage;
-        } else if (value == DIRECTION.down) {
-            this.entityImage = downImage;
-        } else if (value == DIRECTION.left) {
-            this.entityImage = leftImage;
-        } else {
-            this.entityImage = rightImage;
+    public void update(DIRECTION value) {
+        if (this.isMoving()) {
+            if (this.curDir == DIRECTION.up) {
+                if (gamemap.checkUp(getcoords())) {
+                    this.entityImage = upImage;
+                    moveUp();
+                }
+            } else if (this.curDir == DIRECTION.down) {
+                if (gamemap.checkDown(getcoords())) {
+                    this.entityImage = downImage;
+                    moveDown();
+                }
+            } else if (this.curDir == DIRECTION.left) {
+                if (gamemap.checkLeft(getcoords())) {
+                    this.entityImage = leftImage;
+                    moveLeft();
+                }
+            } else {
+                if (gamemap.checkRight(getcoords())) {
+                    this.entityImage = rightImage;
+                    moveRight();
+                }
+            }
+
         }
+    }
+
+    public DIRECTION getCurDirection() {
+        return this.curDir;
+    }
+
+    public void setDirection(DIRECTION dir) {
+        this.curDir = dir;
     }
 
     public void moveUp() {
-        updateImage(DIRECTION.up);
-        Point2D curPos = this.getDrawPosition();
-        if (gamemap.checkUp(getcoords())) {
-            this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() - 1);
-        }
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX(), (float) curPos.getY() - speed);
     }
 
     public void moveDown() {
-        updateImage(DIRECTION.down);
-        Point2D curPos = this.getDrawPosition();
-        if (gamemap.checkDown(getcoords())) {
-            this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() + 1);
-        }
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX(), (float) curPos.getY() + speed);
     }
 
     public void moveLeft() {
-        updateImage(DIRECTION.left);
-        Point2D curPos = this.getDrawPosition();
-        if (gamemap.checkLeft(getcoords())) {
-            this.setDrawPosition((float) curPos.getX() - 1, (float) curPos.getY());
-        }
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX() - speed, (float) curPos.getY());
     }
 
     public void moveRight() {
-        updateImage(DIRECTION.right);
-        Point2D curPos = this.getDrawPosition();
-        if (gamemap.checkRight(getcoords())) {
-            this.setDrawPosition((float) curPos.getX() + 1, (float) curPos.getY());
-        }
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
+
+    // this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() - 1);
 
 }

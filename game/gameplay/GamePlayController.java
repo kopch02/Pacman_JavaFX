@@ -3,6 +3,7 @@ package gameplay;
 import java.io.File;
 
 import entity.entity.player.Player;
+import entity.entity.player.Player.DIRECTION;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -31,6 +32,7 @@ public class GamePlayController {
         initializeCanvas();
         player.setDrawPosition(350, 285);
         player.setScale(1.4f);
+        player.setMove(true);
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.addEntity(player);
@@ -40,22 +42,23 @@ public class GamePlayController {
             @Override
             public void tick(float secondsSinceLastFrame) {
                 renderer.prepare();
-                updatePlayerMovement(secondsSinceLastFrame);
+                updatePlayerMovement();
+                player.update(player.getCurDirection());
                 renderer.render();
             }
         };
         timer.start();
     }
 
-    private void updatePlayerMovement(float frameDuration) {
+    private void updatePlayerMovement() {
         if (keys.isDown(KeyCode.W)) {
-            player.moveUp();
+            player.setDirection(DIRECTION.up);
         } else if (keys.isDown(KeyCode.S)) {
-            player.moveDown();
+            player.setDirection(DIRECTION.down);
         } else if (keys.isDown(KeyCode.A)) {
-            player.moveLeft();
+            player.setDirection(DIRECTION.left);
         } else if (keys.isDown(KeyCode.D)) {
-            player.moveRight();
+            player.setDirection(DIRECTION.right);
         }
     }
 
