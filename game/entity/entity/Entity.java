@@ -88,12 +88,14 @@ public class Entity {
     public void setMove(boolean t) {
         this.isMoving = t;
     }
-    //под отображение
+
+    // под отображение
     public double layx() {
         Point2D pos = getDrawPosition();
         return pos.getX();
     }
-    //под отображение
+
+    // под отображение
     public double layy() {
         Point2D pos = getDrawPosition();
         return pos.getY();

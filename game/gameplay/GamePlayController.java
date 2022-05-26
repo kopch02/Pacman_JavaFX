@@ -13,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;//под отображение
 import entity.map.GameMap;//под отображение
 
 public class GamePlayController {
-    GameMap gamemap = new GameMap();//под отображение
+    GameMap gamemap = new GameMap();// под отображение
 
     @FXML
     public AnchorPane mainRoot;
@@ -35,10 +35,11 @@ public class GamePlayController {
         initializeCanvas();
         player.setDrawPosition(330, 285);
         player.setScale(1.0f);
+        player.setMove(true);
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
-        GraphicsContext context = gameCanvas.getGraphicsContext2D();//под отображение
+        GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
         renderer.addEntity(player);
 
         GameLoopTimer timer = new GameLoopTimer() {
@@ -48,8 +49,8 @@ public class GamePlayController {
                 updatePlayerMovement();
                 player.update(player.getCurDirection());
                 renderer.render();
-                gamemap.create(context);//под отображение
-                context.fillRect(player.layx(), player.layy(), player.getWidth(), player.getHeight());//под отображение
+                //gamemap.create(context);// под отображение
+                
             }
         };
         timer.start();

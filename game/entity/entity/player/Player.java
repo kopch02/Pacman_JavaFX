@@ -65,7 +65,15 @@ public class Player extends Entity {
     }
 
     public void setDirection(DIRECTION dir) {
-        this.curDir = dir;
+        if (dir == DIRECTION.up && gamemap.checkUp(getcoords())) {
+            this.curDir = DIRECTION.up;
+        } else if (dir == DIRECTION.down && gamemap.checkDown(getcoords())) {
+            this.curDir = DIRECTION.down;
+        } else if (dir == DIRECTION.left && gamemap.checkLeft(getcoords())) {
+            this.curDir = DIRECTION.left;
+        } else if (dir == DIRECTION.right && gamemap.checkRight(getcoords())) {
+            this.curDir = DIRECTION.right;
+        }
     }
 
     public void moveUp() {
@@ -87,7 +95,5 @@ public class Player extends Entity {
         Point2D curPos = getDrawPosition();
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
-
-    // this.setDrawPosition((float) curPos.getX(), (float) curPos.getY() - 1);
 
 }
