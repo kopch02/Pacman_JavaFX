@@ -20,8 +20,8 @@ public class Entity {
 
     public Entity(Image entityImage) {
         this.entityImage = entityImage;
-        this.width = entityImage.getWidth();
-        this.height = entityImage.getHeight();
+        this.width = 40;
+        this.height = 40;
     }
 
     public Rectangle getSprite() {
@@ -87,5 +87,15 @@ public class Entity {
 
     public void setMove(boolean t) {
         this.isMoving = t;
+    }
+    //под отображение
+    public double layx() {
+        Point2D pos = getDrawPosition();
+        return pos.getX();
+    }
+    //под отображение
+    public double layy() {
+        Point2D pos = getDrawPosition();
+        return pos.getY();
     }
 }
