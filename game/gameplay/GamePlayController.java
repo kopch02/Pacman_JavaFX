@@ -4,6 +4,7 @@ import java.io.File;
 
 import entity.entity.player.Player;
 import entity.entity.player.Player.DIRECTION;
+import entity.entity.enemy.Ghost;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -25,6 +26,9 @@ public class GamePlayController {
 
     private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()));
 
+    private Ghost orange_ghost = new Ghost(new Image(new File("other/gosts/orange/up.png").toURI().toString()));
+
+
     private void initializeCanvas() {
         gameCanvas.widthProperty().bind(mainRoot.widthProperty());
         gameCanvas.heightProperty().bind(mainRoot.heightProperty());
@@ -33,14 +37,20 @@ public class GamePlayController {
     public void initialize() {
         mainRoot.setFocusTraversable(true);
         initializeCanvas();
-        player.setDrawPosition(330, 285);
+        player.setDrawPosition(315, 350);
         player.setScale(1.0f);
         player.setMove(true);
+
+        orange_ghost.setDrawPosition(15, 15);
+        orange_ghost.setScale(1.0f);
+        orange_ghost.setMove(true);
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
         renderer.addEntity(player);
+        renderer.addEntity(orange_ghost);
+
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -48,8 +58,9 @@ public class GamePlayController {
                 renderer.prepare();
                 updatePlayerMovement();
                 player.update(player.getCurDirection());
+                orange_ghost.update(player.getCenter());
                 renderer.render();
-                //gamemap.create(context);// под отображение
+                gamemap.create(context);// под отображение
                 
             }
         };

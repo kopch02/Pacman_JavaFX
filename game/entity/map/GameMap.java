@@ -7,6 +7,7 @@ import javafx.scene.shape.*;
 
 public class GameMap {
     ArrayList<Rectangle> nodes = new ArrayList<>();
+    ArrayList<Rectangle> crossroad = new ArrayList<>();
 
     public GameMap() {
         nodes.add(new Rectangle(55, 55, 80, 45));// rec1
@@ -18,7 +19,7 @@ public class GameMap {
         nodes.add(new Rectangle(55, 140, 80, 20));// rec6
         nodes.add(new Rectangle(175, 140, 30, 150));// rec7
         nodes.add(new Rectangle(205, 200, 75, 25));// rec8
-        nodes.add(new Rectangle(245, 140, 175, 20));// rec9
+        nodes.add(new Rectangle(245, 140, 180, 20));// rec9
         nodes.add(new Rectangle(320, 160, 30, 65));// rec10
         nodes.add(new Rectangle(390, 200, 75, 25));// rec11
         nodes.add(new Rectangle(465, 140, 35, 150));// rec12
@@ -76,17 +77,36 @@ public class GameMap {
         nodes.add(new Rectangle(245, 275, 10, 65));//лево
         nodes.add(new Rectangle(415, 275, 10, 65));//право
         nodes.add(new Rectangle(245, 340, 180, 10));//низ
+
+        //перекрёстки
+        crossroad.add(new Rectangle(135, 100, 40, 40));
+        crossroad.add(new Rectangle(500, 100, 40, 40));
+        crossroad.add(new Rectangle(135, 290, 40, 40));
+        crossroad.add(new Rectangle(500, 290, 40, 40));
+        crossroad.add(new Rectangle(135, 415, 40, 40));
+        crossroad.add(new Rectangle(500, 415, 40, 40));
     }
 
     public void create(GraphicsContext contex) {
         for (Rectangle sprite : nodes) {
             drawRectangle(contex, sprite);
         }
+        for (Rectangle sprite : crossroad) {
+            drawRectangle2(contex, sprite);
+        }
 
     }
 
     private void drawRectangle(GraphicsContext gc, Rectangle rect) {
         gc.setFill(Color.WHITE);
+        gc.fillRect(rect.getX(),
+                rect.getY(),
+                rect.getWidth(),
+                rect.getHeight());
+
+    }
+    private void drawRectangle2(GraphicsContext gc, Rectangle rect) {
+        gc.setFill(Color.GREEN);
         gc.fillRect(rect.getX(),
                 rect.getY(),
                 rect.getWidth(),
@@ -155,6 +175,78 @@ public class GameMap {
         for (Rectangle sprite : nodes) {
             if (within_x(coords, sprite)) {
                 if ((coords.get(3) <= sprite.getY() + sprite.getHeight()) && (coords.get(3) >= sprite.getY())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean checkLeft_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : nodes) {
+            if (within_y(coords, sprite)) {
+                if ((coords.get(0) <= sprite.getX() + sprite.getWidth()) && (coords.get(0) >= sprite.getX())) {
+                    return false;
+                }
+            }
+        }
+        for (Rectangle sprite : crossroad) {
+            if (within_y(coords, sprite)) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean checkRight_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : nodes) {
+            if (within_y(coords, sprite)) {
+                if ((coords.get(2) >= sprite.getX()) && (coords.get(2) <= sprite.getX() + sprite.getWidth())) {
+                    return false;
+                }
+            }
+        }
+        for (Rectangle sprite : crossroad) {
+            if (within_y(coords, sprite)) {
+                System.out.println(coords.get(0));
+                System.out.println(sprite.getX());
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkUp_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : nodes) {
+            if (within_x(coords, sprite)) {
+                if ((coords.get(1) <= sprite.getY() + sprite.getHeight()) && (coords.get(1) >= sprite.getY())) {
+                    return false;
+                }
+            }
+        }
+        for (Rectangle sprite : crossroad) {
+            if (within_y(coords, sprite)) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkDown_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : nodes) {
+            if (within_x(coords, sprite)) {
+                if ((coords.get(3) <= sprite.getY() + sprite.getHeight()) && (coords.get(3) >= sprite.getY())) {
+                    return false;
+                }
+            }
+        }
+        for (Rectangle sprite : crossroad) {
+            if (within_y(coords, sprite)) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
                     return false;
                 }
             }

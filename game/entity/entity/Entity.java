@@ -100,4 +100,8 @@ public class Entity {
         Point2D pos = getDrawPosition();
         return pos.getY();
     }
+    public static double getRandom(){
+        double x = (int)(Math.random()*((4-1)+1))+1;
+        return x;
+    }
 }
