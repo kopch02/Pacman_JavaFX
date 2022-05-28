@@ -1,19 +1,34 @@
 package entity.map;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.image.Image;
+import java.io.File;
+import gameplay.Renderer;
+import entity.entity.points.Point;
+
 
 public class GameMap {
     ArrayList<Rectangle> nodes = new ArrayList<>();
     ArrayList<Rectangle> crossroad = new ArrayList<>();
+    ArrayList<Integer> y_points = new ArrayList<>();
+    Image point_image=new Image(new File("other/point.png").toURI().toString());
 
     public GameMap() {
+        y_points.add(35);
+        y_points.add(120);
+        y_points.add(180);
+        y_points.add(245);
+        y_points.add(305);
+        y_points.add(370);
+        y_points.add(435);
+        y_points.add(495);
+        y_points.add(560);
+        y_points.add(625);
+
         nodes.add(new Rectangle(55, 55, 80, 45));// rec1
         nodes.add(new Rectangle(175, 55, 105, 45));// rec2
         nodes.add(new Rectangle(320, 0, 30, 100));// rec3
@@ -53,11 +68,11 @@ public class GameMap {
         nodes.add(new Rectangle(0, 0, 670, 15));
         nodes.add(new Rectangle(0, 0, 15, 200));
 
-        nodes.add(new Rectangle(0, 200, 135, 15));
+        nodes.add(new Rectangle(0, 200, 135, 60));
         nodes.add(new Rectangle(120, 215, 15, 60));//тройка лево верх
         nodes.add(new Rectangle(0, 275, 135, 15));
 
-        nodes.add(new Rectangle(0, 330, 135, 15));
+        nodes.add(new Rectangle(0, 330, 135, 60));
         nodes.add(new Rectangle(120, 345, 15, 60));//тройка лево низ
         nodes.add(new Rectangle(0, 400, 135, 15));
 
@@ -65,11 +80,11 @@ public class GameMap {
         nodes.add(new Rectangle(0, 645, 670, 15));//низ
         nodes.add(new Rectangle(655, 400, 15, 245));
 
-        nodes.add(new Rectangle(540, 330, 130, 15));
+        nodes.add(new Rectangle(540, 330, 130, 60));
         nodes.add(new Rectangle(540, 330, 15, 75));//тройка право низ
         nodes.add(new Rectangle(540, 400, 123, 15));
 
-        nodes.add(new Rectangle(540, 200, 130, 15));
+        nodes.add(new Rectangle(540, 200, 130, 60));
         nodes.add(new Rectangle(540, 215, 15, 75));//тройка право верх
         nodes.add(new Rectangle(540, 275, 130, 15));
 
@@ -89,6 +104,8 @@ public class GameMap {
         crossroad.add(new Rectangle(500, 290, 40, 40));
         crossroad.add(new Rectangle(135, 415, 40, 40));
         crossroad.add(new Rectangle(500, 415, 40, 40));
+
+        
     }
 
     public void create(GraphicsContext contex) {
@@ -100,6 +117,8 @@ public class GameMap {
         }
 
     }
+
+
 
     private void drawRectangle(GraphicsContext gc, Rectangle rect) {
         gc.setFill(Color.WHITE);
@@ -268,6 +287,29 @@ public class GameMap {
         }
     }
         return false;
+    }
+    public void create_points(Renderer renderer) {
+        nodes.add(new Rectangle(255,275,180,60));
+        for(int x = 31; x < 655; x+=37) {
+            for(int y = 25; y < 645; y+=31) {
+                if (checkPoint(x,y)){
+                    renderer.addEntity(new Point(point_image,x,y));
+                }
+            }
+         }
+        nodes.remove(54);
+    }
+    public boolean checkPoint(float x, float y){
+        Rectangle temp=new Rectangle(x, y, 20, 20);
+        for (Rectangle sprite : nodes) {
+            Shape intersect = Shape.intersect(temp, sprite);
+            if(intersect.getBoundsInLocal().getWidth() != -1)
+            {
+                //FXMLLoad("game/menu/MenuView.fxml");
+                return false;
+            }
+        }
+        return true;
     }
     //private void FXMLLoad(String path){
     //    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));

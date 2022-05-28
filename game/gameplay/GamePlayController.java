@@ -67,10 +67,11 @@ public class GamePlayController {
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
+        gamemap.create_points(renderer);
         renderer.addEntity(player);
         renderer.addEntity(orange_ghost);
         renderer.addEntity(blue_ghost);
-
+        
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -85,12 +86,14 @@ public class GamePlayController {
                 ghost_list.add(blue_ghost.getSprite());
                 player.setDead(gamemap.checkLose(player.getSprite(),ghost_list));
                 ghost_list.clear();
-                gamemap.create(context);// под отображение
+                //gamemap.create(context);// под отображение
                 
             }
         };
         timer.start();
     }
+
+    
 
     private void updatePlayerMovement() {
         if (keys.isDown(KeyCode.W)) {
