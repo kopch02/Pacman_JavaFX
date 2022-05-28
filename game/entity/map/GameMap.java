@@ -1,6 +1,10 @@
 package entity.map;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -36,7 +40,7 @@ public class GameMap {
         nodes.add(new Rectangle(55, 580, 225, 25));// rec21
         nodes.add(new Rectangle(175, 515, 30, 65));// rec22
         nodes.add(new Rectangle(175, 455, 105, 20));// rec23
-        nodes.add(new Rectangle(245, 515, 175, 25));// rec24
+        nodes.add(new Rectangle(245, 515, 180, 25));// rec24
         nodes.add(new Rectangle(320, 540, 30, 65));// rec25
         nodes.add(new Rectangle(390, 455, 110, 20));// rec26
         nodes.add(new Rectangle(465, 515, 35, 65));// rec27
@@ -182,6 +186,12 @@ public class GameMap {
         return true;
     }
     public boolean checkLeft_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : crossroad) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                }
+            
+        }
         for (Rectangle sprite : nodes) {
             if (within_y(coords, sprite)) {
                 if ((coords.get(0) <= sprite.getX() + sprite.getWidth()) && (coords.get(0) >= sprite.getX())) {
@@ -189,16 +199,16 @@ public class GameMap {
                 }
             }
         }
-        for (Rectangle sprite : crossroad) {
-            if (within_y(coords, sprite)) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            }
-        }
+        
         return true;
     }
     public boolean checkRight_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : crossroad) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                
+            }
+        }
         for (Rectangle sprite : nodes) {
             if (within_y(coords, sprite)) {
                 if ((coords.get(2) >= sprite.getX()) && (coords.get(2) <= sprite.getX() + sprite.getWidth())) {
@@ -206,19 +216,17 @@ public class GameMap {
                 }
             }
         }
-        for (Rectangle sprite : crossroad) {
-            if (within_y(coords, sprite)) {
-                System.out.println(coords.get(0));
-                System.out.println(sprite.getX());
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            }
-        }
+        
         return true;
     }
 
     public boolean checkUp_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : crossroad) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                }
+            
+        }
         for (Rectangle sprite : nodes) {
             if (within_x(coords, sprite)) {
                 if ((coords.get(1) <= sprite.getY() + sprite.getHeight()) && (coords.get(1) >= sprite.getY())) {
@@ -226,17 +234,17 @@ public class GameMap {
                 }
             }
         }
-        for (Rectangle sprite : crossroad) {
-            if (within_y(coords, sprite)) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            }
-        }
+        
         return true;
     }
 
     public boolean checkDown_Ghost(ArrayList<Double> coords) {
+        for (Rectangle sprite : crossroad) {
+                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                    return false;
+                }
+            
+        }
         for (Rectangle sprite : nodes) {
             if (within_x(coords, sprite)) {
                 if ((coords.get(3) <= sprite.getY() + sprite.getHeight()) && (coords.get(3) >= sprite.getY())) {
@@ -244,13 +252,31 @@ public class GameMap {
                 }
             }
         }
-        for (Rectangle sprite : crossroad) {
-            if (within_y(coords, sprite)) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            }
-        }
+        
         return true;
     }
+
+    public boolean checkLose(Rectangle player,ArrayList<Rectangle> enemy_list ){
+        for(Rectangle enemy : enemy_list){
+       
+        Shape intersect = Shape.intersect(player, enemy);
+
+        if(intersect.getBoundsInLocal().getWidth() != -1)
+        {
+            //FXMLLoad("game/menu/MenuView.fxml");
+            return true;
+        }
+    }
+        return false;
+    }
+    //private void FXMLLoad(String path){
+    //    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
+    //    AnchorPane pane;
+    //    try{
+    //        pane = fxmlLoader.load();
+    //        mainRoot.getChildren().setALL(pane);
+    //    } catch (IOException e){
+    //        e.printStackTrace();
+    //    }
+    //}
 }

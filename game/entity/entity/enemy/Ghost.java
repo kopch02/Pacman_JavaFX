@@ -6,8 +6,6 @@ import entity.entity.Entity;
 import javafx.scene.image.Image;
 import entity.map.GameMap;
 import javafx.geometry.Point2D;
-import java.util.ArrayList;
-
 
 
 public class Ghost extends Entity{
@@ -16,7 +14,7 @@ public class Ghost extends Entity{
     Image downImage;
     Image leftImage;
     Image rightImage;
-    double curDir;
+    DIRECTION curDir;
     float speed = 1;
     boolean is_a_direction=false;
     Point2D ghost_center;
@@ -30,38 +28,51 @@ public class Ghost extends Entity{
         up, down, left, right
     }
 
-    public Ghost(Image entityImage) {
-        super(entityImage);
-        this.curDir = 1;
+    public Ghost(Image UpImage,Image DownImage,Image LeftImage,Image RightImage) {
+        super(UpImage);
+        this.curDir = DIRECTION.up;
         upImage = super.getImage();
-        downImage = new Image(new File("other/gosts/orange/down.png").toURI().toString());
-        leftImage = new Image(new File("other/gosts/orange/left.png").toURI().toString());
-        rightImage = new Image(new File("other/gosts/orange/right.png").toURI().toString());
+        downImage = DownImage;
+        leftImage = LeftImage;
+        rightImage = RightImage;
     }
     public void update(Point2D player_center) {
+        ghost_center=getCenter();
         if (this.is_a_direction){
             moving(curDir);
         }
         else{
-            ghost_center=getCenter();
+            
             if (ghost_center.getX()<player_center.getX()){
                 if (ghost_center.getY()<player_center.getY()){//левее и выше
                     distance1=Math.sqrt(Math.pow(((ghost_center.getX()+40)-player_center.getX()),2)+Math.pow(((ghost_center.getY())-player_center.getY()),2));
                     distance2=Math.sqrt(Math.pow(((ghost_center.getX())-player_center.getX()),2)+Math.pow(((ghost_center.getY()+40)-player_center.getY()),2));
                     if (distance1<distance2){
-                        if (gamemap.checkRight_Ghost(getcoords())) {
-                            curDir=4;
+                        if (gamemap.checkRight(getcoords())) {
+                            curDir=DIRECTION.right;
+                            moveRight();
                         }
-                        else if (gamemap.checkDown_Ghost(getcoords())) {
-                            curDir=2;
+                        else if (gamemap.checkDown(getcoords())) {
+                            curDir=DIRECTION.down;
+                            moveDown();
+                        }
+                        else{
+                            curDir=DIRECTION.left;
+                            moveLeft();
                         }
                     }
                     else{
-                        if (gamemap.checkDown_Ghost(getcoords())) {
-                            curDir=2;
+                        if (gamemap.checkDown(getcoords())) {
+                            curDir=DIRECTION.down;
+                            moveDown();
                         }
-                        else if (gamemap.checkRight_Ghost(getcoords())) {
-                            curDir=4;
+                        else if (gamemap.checkRight(getcoords())) {
+                            curDir=DIRECTION.right;
+                            moveRight();
+                        }
+                        else{
+                            curDir=DIRECTION.left;
+                            moveLeft();
                         }
                     }
                 }
@@ -69,19 +80,31 @@ public class Ghost extends Entity{
                     distance1=Math.sqrt(Math.pow(((ghost_center.getX()+40)-player_center.getX()),2)+Math.pow(((ghost_center.getY())-player_center.getY()),2));
                     distance2=Math.sqrt(Math.pow(((ghost_center.getX())-player_center.getX()),2)+Math.pow(((ghost_center.getY()-40)-player_center.getY()),2));
                     if (distance1<distance2){
-                        if (gamemap.checkRight_Ghost(getcoords())) {
-                            curDir=4;
+                        if (gamemap.checkRight(getcoords())) {
+                            curDir=DIRECTION.right;
+                            moveRight();
                         }
-                        else if (gamemap.checkUp_Ghost(getcoords())) {
-                            curDir=1;
+                        else if (gamemap.checkUp(getcoords())) {
+                            curDir=DIRECTION.up;
+                            moveUp();
+                        }
+                        else{
+                            curDir=DIRECTION.down;
+                            moveDown();
                         }
                     }
                     else{
-                        if (gamemap.checkUp_Ghost(getcoords())) {
-                            curDir=1;
+                        if (gamemap.checkUp(getcoords())) {
+                            curDir=DIRECTION.up;
+                            moveUp();
                         }
-                        else if (gamemap.checkRight_Ghost(getcoords())) {
-                            curDir=4;
+                        else if (gamemap.checkRight(getcoords())) {
+                            curDir=DIRECTION.right;
+                            moveRight();
+                        }
+                        else{
+                            curDir=DIRECTION.down;
+                            moveDown();
                         }
                     }
                 }
@@ -91,19 +114,31 @@ public class Ghost extends Entity{
                     distance1=Math.sqrt(Math.pow(((ghost_center.getX()-40)-player_center.getX()),2)+Math.pow(((ghost_center.getY())-player_center.getY()),2));
                     distance2=Math.sqrt(Math.pow(((ghost_center.getX())-player_center.getX()),2)+Math.pow(((ghost_center.getY()+40)-player_center.getY()),2));
                     if (distance1<distance2){
-                        if (gamemap.checkLeft_Ghost(getcoords())) {
-                            curDir=3;
+                        if (gamemap.checkLeft(getcoords())) {
+                            curDir=DIRECTION.left;
+                            moveLeft();
                         }
-                        else if (gamemap.checkDown_Ghost(getcoords())) {
-                            curDir=2;
+                        else if (gamemap.checkDown(getcoords())) {
+                            curDir=DIRECTION.down;
+                            moveDown();
+                        }
+                        else{
+                            curDir=DIRECTION.up;
+                            moveUp();
                         }
                     }
                     else{
-                        if (gamemap.checkDown_Ghost(getcoords())) {
-                            curDir=2;
+                        if (gamemap.checkDown(getcoords())) {
+                            curDir=DIRECTION.down;
+                            moveDown();
                         }
-                        else if (gamemap.checkLeft_Ghost(getcoords())) {
-                            curDir=3;
+                        else if (gamemap.checkLeft(getcoords())) {
+                            curDir=DIRECTION.left;
+                            moveLeft();
+                        }
+                        else{
+                            curDir=DIRECTION.up;
+                            moveUp();
                         }
                     }
                 }
@@ -111,19 +146,31 @@ public class Ghost extends Entity{
                     distance1=Math.sqrt(Math.pow(((ghost_center.getX()-40)-player_center.getX()),2)+Math.pow(((ghost_center.getY())-player_center.getY()),2));
                     distance2=Math.sqrt(Math.pow(((ghost_center.getX())-player_center.getX()),2)+Math.pow(((ghost_center.getY()-40)-player_center.getY()),2));
                     if (distance1<distance2){
-                        if (gamemap.checkLeft_Ghost(getcoords())) {
-                            curDir=3;
+                        if (gamemap.checkLeft(getcoords())) {
+                            curDir=DIRECTION.left;
+                            moveLeft();
                         }
-                        else if (gamemap.checkUp_Ghost(getcoords())) {
-                            curDir=1;
+                        else if (gamemap.checkUp(getcoords())) {
+                            curDir=DIRECTION.up;
+                            moveUp();
+                        }
+                        else{
+                            curDir=DIRECTION.right;
+                            moveRight();
                         }
                     }
                     else {
-                        if (gamemap.checkUp_Ghost(getcoords())) {
-                            curDir=1;
+                        if (gamemap.checkUp(getcoords())) {
+                            curDir=DIRECTION.up;
+                            moveUp();
                         }
-                        else if (gamemap.checkLeft_Ghost(getcoords())) {
-                            curDir=3;
+                        else if (gamemap.checkLeft(getcoords())) {
+                            curDir=DIRECTION.left;
+                            moveLeft();
+                        }
+                        else{
+                            curDir=DIRECTION.right;
+                            moveRight();
                         }
                     }
                 }
@@ -134,35 +181,35 @@ public class Ghost extends Entity{
         
     }
 
-    public void moving(double direction){
+    public void moving(DIRECTION direction){
         if (this.isMoving()) {
             
-            if (this.curDir == 1) {
-                if (gamemap.checkUp(getcoords())) {
+            if (this.curDir == DIRECTION.up) {
+                if (gamemap.checkUp_Ghost(getcoords())) {
                     this.entityImage = upImage;
                     moveUp();
                 }
                 else{
                     this.is_a_direction=false;
                 }
-            } else if (this.curDir == 2) {
-                if (gamemap.checkDown(getcoords())) {
+            } else if (this.curDir == DIRECTION.down) {
+                if (gamemap.checkDown_Ghost(getcoords())) {
                     this.entityImage = downImage;
                     moveDown();
                 }
                 else{
                     this.is_a_direction=false;
                 }
-            } else if (this.curDir == 3) {
-                if (gamemap.checkLeft(getcoords())) {
+            } else if (this.curDir == DIRECTION.left) {
+                if (gamemap.checkLeft_Ghost(getcoords())) {
                     this.entityImage = leftImage;
                     moveLeft();
                 }
                 else{
                     this.is_a_direction=false;
                 }
-            } else if (this.curDir == 4){
-                if (gamemap.checkRight(getcoords())) {
+            } else if (this.curDir == DIRECTION.right){
+                if (gamemap.checkRight_Ghost(getcoords())) {
                     this.entityImage = rightImage;
                     moveRight();
                 }

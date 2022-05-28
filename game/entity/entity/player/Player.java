@@ -17,6 +17,7 @@ public class Player extends Entity {
     Image rightImage;
     DIRECTION curDir;
     float speed = 1;
+    boolean isDead=false;
 
     GameMap gamemap = new GameMap();
 
@@ -94,6 +95,14 @@ public class Player extends Entity {
     public void moveRight() {
         Point2D curPos = getDrawPosition();
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
+    }
+
+    public void setDead(boolean res){
+        isDead = res;
+    }
+
+    public boolean getDead(){
+        return isDead;
     }
 
 }
