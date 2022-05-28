@@ -14,7 +14,8 @@ public class Entity {
     double height;
     boolean collisionDetected;
     boolean isMoving = false;
-    GameMap gamemap = new GameMap();
+    protected DIRECTION curDir;
+    protected GameMap gamemap = new GameMap();
 
     protected Image entityImage;
 
@@ -22,6 +23,14 @@ public class Entity {
         this.entityImage = entityImage;
         this.width = 40;
         this.height = 40;
+    }
+
+    public static enum DIRECTION {
+        up, down, left, right
+    }
+
+    public DIRECTION getCurDirection() {
+        return this.curDir;
     }
 
     public Rectangle getSprite() {
@@ -71,7 +80,7 @@ public class Entity {
         return this.height * getScale();
     }
 
-    public ArrayList<Double> getcoords() {
+    public ArrayList<Double> getCoords() {
         ArrayList<Double> coords = new ArrayList<>();
         Point2D pos = getDrawPosition();
         coords.add((double) pos.getX());

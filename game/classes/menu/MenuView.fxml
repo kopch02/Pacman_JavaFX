@@ -8,18 +8,23 @@
 
 <AnchorPane fx:id="mainRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="681.0" style="-fx-background-color: #306;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.MenuController">
    <children>
-      <Label layoutX="237.0" layoutY="32.0" text="WELCOME TO PACMAN" textFill="#f2eeee">
+      <Label layoutX="227.0" layoutY="37.0" text="WELCOME TO PACMAN" textFill="#f2eeee">
          <font>
             <Font name="Bookshelf Symbol 7" size="22.0" />
          </font></Label>
-      <Button fx:id="startButton" layoutX="230.0" layoutY="283.0" mnemonicParsing="false" onAction="#letsGo" prefHeight="97.0" prefWidth="248.0" text="START GAME">
+      <Button fx:id="startButton" layoutX="217.0" layoutY="283.0" mnemonicParsing="false" onAction="#letsGo" prefHeight="97.0" prefWidth="248.0" text="START GAME">
          <font>
             <Font name="Arial Black" size="25.0" />
          </font></Button>
-      <Label layoutX="309.0" layoutY="202.0" text="Your name:" textFill="#f2eeee">
+      <Label layoutX="294.0" layoutY="206.0" text="Your name:" textFill="#f2eeee">
          <font>
             <Font name="Bookshelf Symbol 7" size="18.0" />
          </font></Label>
-      <TextField fx:id="playerName" layoutX="279.0" layoutY="243.0" />
+      <TextField fx:id="playerName" layoutX="266.0" layoutY="243.0" />
+      <Button fx:id="scoresButton" layoutX="539.0" layoutY="615.0" mnemonicParsing="false" onAction="#seeScores" prefHeight="34.0" prefWidth="127.0" text="SCORES">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

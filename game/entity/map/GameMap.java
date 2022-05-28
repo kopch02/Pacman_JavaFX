@@ -161,4 +161,11 @@ public class GameMap {
         }
         return true;
     }
+
+    public boolean checkAll(ArrayList<Double> coords) {
+        if (!checkUp(coords) || !checkDown(coords) || !checkLeft(coords) || !checkRight(coords)){
+            return false;
+        }
+        return true;
+    }
 }

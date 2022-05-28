@@ -2,8 +2,8 @@ package gameplay;
 
 import java.io.File;
 
+import entity.entity.Entity.DIRECTION;
 import entity.entity.player.Player;
-import entity.entity.player.Player.DIRECTION;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -39,7 +39,7 @@ public class GamePlayController {
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
-        GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
+        //GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
         renderer.addEntity(player);
 
         GameLoopTimer timer = new GameLoopTimer() {
