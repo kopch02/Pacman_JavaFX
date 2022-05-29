@@ -72,6 +72,8 @@ public class GameMap {
         nodes.add(new Rectangle(120, 215, 15, 60));//тройка лево верх
         nodes.add(new Rectangle(0, 275, 135, 15));
 
+        nodes.add(new Rectangle(0, 275, 15, 60));//стена лево
+        
         nodes.add(new Rectangle(0, 330, 135, 60));
         nodes.add(new Rectangle(120, 345, 15, 60));//тройка лево низ
         nodes.add(new Rectangle(0, 400, 135, 15));
@@ -83,6 +85,8 @@ public class GameMap {
         nodes.add(new Rectangle(540, 330, 130, 60));
         nodes.add(new Rectangle(540, 330, 15, 75));//тройка право низ
         nodes.add(new Rectangle(540, 400, 123, 15));
+
+        nodes.add(new Rectangle(645, 275, 15, 60));//стена право
 
         nodes.add(new Rectangle(540, 200, 130, 60));
         nodes.add(new Rectangle(540, 215, 15, 75));//тройка право верх
@@ -297,7 +301,7 @@ public class GameMap {
                 }
             }
          }
-        nodes.remove(54);
+        nodes.remove(nodes.size()-1);
     }
     public boolean checkPoint(float x, float y){
         Rectangle temp=new Rectangle(x, y, 20, 20);
@@ -311,14 +315,4 @@ public class GameMap {
         }
         return true;
     }
-    //private void FXMLLoad(String path){
-    //    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
-    //    AnchorPane pane;
-    //    try{
-    //        pane = fxmlLoader.load();
-    //        mainRoot.getChildren().setALL(pane);
-    //    } catch (IOException e){
-    //        e.printStackTrace();
-    //    }
-    //}
 }
