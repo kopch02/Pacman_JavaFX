@@ -2,6 +2,7 @@ package menu.scores;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,9 +31,6 @@ public class ScoresController {
     TableColumn<PlayerBD, String> playersNamesCol;
     @FXML
     TableColumn<PlayerBD, String> playersScoresCol;
-
-    @FXML
-    Button b;
 
     private Net net;
 
@@ -64,23 +62,26 @@ public class ScoresController {
     }
 
     @FXML
-    public void s(ActionEvent actionEvent) {
-        net.sendToServer("second", "10");
-    }
-
-    @FXML
     void populatePlayers(ObservableList<PlayerBD> playersData) throws ClassNotFoundException {
         playersTable.setItems(playersData);
     }
 
     public void refresh() throws ClassNotFoundException, IOException {
-        try {
-            ObservableList<PlayerBD> playersData = net.receivePLFromServer();
-            populatePlayers(playersData);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        Platform.runLater(new MyThread());
+    }
+
+    class MyThread extends Thread {
+
+        @Override
+        public void run() {
+            try {
+                ObservableList<PlayerBD> playersData = net.receivePLFromServer();
+                populatePlayers(playersData);
+            } catch (ClassNotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

@@ -1,39 +1,41 @@
-package menu;
+package menu.death;
 
 import java.io.IOException;
 
 import entity.entity.player.Player;
-import javafx.event.ActionEvent;
+import gameplay.GamePlayController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import menu.scores.Net;
 
-public class MenuController {
+public class DeathController {
     @FXML
-    Button startButton;
+    Button seeScoresButton;
     @FXML
-    Button scoresButton;
-
-    @FXML
-    TextField playerName;
+    Button backToMenuButton;
 
     @FXML
     AnchorPane mainRoot;
 
-    @FXML
-    TextField playerNameField;
+    Net net;
 
     @FXML
-    public void letsGo(ActionEvent actionEvent) {
-        FXMLLoad("../gameplay/GamePlayView.fxml");
-        Player.setName(playerNameField.getText());
+    public void initialize() {
+        net = new Net();
+        net.sendToServer(Player.getName(), "100");
+
     }
 
     @FXML
-    public void seeScores(ActionEvent actionEvent) {
-        FXMLLoad("scores/ScoresView.fxml");
+    public void seeScores() {
+        FXMLLoad("../scores/ScoresView.fxml");
+    }
+
+    @FXML
+    public void backToMenu() {
+        FXMLLoad("../MenuView.fxml");
     }
 
     private void FXMLLoad(String path) {
@@ -46,5 +48,4 @@ public class MenuController {
             e.printStackTrace();
         }
     }
-
 }

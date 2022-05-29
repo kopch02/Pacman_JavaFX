@@ -29,6 +29,8 @@ public class Net {
 
     public ObservableList<PlayerBD> receivePLFromServer() throws ClassNotFoundException, IOException{ // PL - players list
         try {
+            out.writeBoolean(false);
+            out.flush();
             ArrayList<PlayerBD> playerList = (ArrayList<PlayerBD>) in.readObject();
             ObservableList<PlayerBD> oPlayerList = FXCollections.observableArrayList(playerList);
             
@@ -44,8 +46,10 @@ public class Net {
 
     public void sendToServer(String name, String score) {
         try {
+            out.writeBoolean(true);
             out.writeUTF(name);
             out.writeUTF(score);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

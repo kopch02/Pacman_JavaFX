@@ -46,12 +46,13 @@ public class PlayerDAO {
     }
 
     public static void insertPlayer(String name, String score) throws SQLException, ClassNotFoundException {
-        String update = "insert into players values (player_id_seq.nextval, '" + name + "')";
+        String update = "insert all into players values (player_id_seq.nextval, '" + name + "')" + 
+                        "into scores values (score_id_seq.nextval, player_id_seq.currval, '" + score + "')" +
+                        "select * from dual";
         try {
             DBUtil.dbExecuteUpdate(update);
+            //update = "insert into scores values (score_id_seq.nextval, player_id_seq.currval, '" + score + "')";
             System.out.println(update);
-            update = "insert into scores values (scores_id_seq.nextval, player_id_seq.currval, '" + score + "')";
-            DBUtil.dbExecuteUpdate(update);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

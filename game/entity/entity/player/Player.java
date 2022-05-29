@@ -13,7 +13,8 @@ public class Player extends Entity {
     Image leftImage;
     Image rightImage;
     float speed = 1;
-
+    boolean Dead = false;
+    static String name;
 
     public Player(Image entityImage) {
         super(entityImage);
@@ -22,6 +23,14 @@ public class Player extends Entity {
         downImage = new Image(new File("other/down.gif").toURI().toString());
         leftImage = new Image(new File("other/left.gif").toURI().toString());
         rightImage = new Image(new File("other/right.gif").toURI().toString());
+    }
+
+    public static void setName(String name) {
+        Player.name = name;
+    }
+
+    public static String getName() {
+        return name;
     }
 
     public void update(DIRECTION value) {
@@ -50,8 +59,6 @@ public class Player extends Entity {
 
         }
     }
-
-    
 
     public void setDirection(DIRECTION dir) {
         if (dir == DIRECTION.up && gamemap.checkUp(getCoords())) {
@@ -83,6 +90,14 @@ public class Player extends Entity {
     public void moveRight() {
         Point2D curPos = getDrawPosition();
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
+    }
+
+    public void setDead(boolean t) {
+        Dead = t;
+    }
+
+    public boolean isDead() {
+        return Dead;
     }
 
 }

@@ -51,21 +51,17 @@ class MyThread extends Thread {
             DataInputStream in = new DataInputStream(localSocket.getInputStream());
             ObjectOutputStream out = new ObjectOutputStream(localSocket.getOutputStream());
 
-            
-
-            if (in.available() != 0) {
-                System.out.println("YES");
+            if (in.readBoolean()) {
                 String playerName = in.readUTF();
                 String playerScore = in.readUTF();
+                System.out.println(playerName);
+                System.out.println(playerScore);
                 PlayerDAO.insertPlayer(playerName, playerScore);
+            } else {
+                ObservableList<PlayerBD> playersList = PlayerDAO.searchPlayers();
+                out.writeObject(new ArrayList<PlayerBD>(playersList));
+                out.flush();
             }
-            else {
-                System.out.println("NO");
-            }
-            ObservableList<PlayerBD> playersList = PlayerDAO.searchPlayers();
-            out.writeObject(new ArrayList<PlayerBD>(playersList));
-
-            out.flush();
 
         } catch (Exception e) {
             System.out.println("Connection reset");

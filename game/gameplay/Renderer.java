@@ -55,8 +55,7 @@ public class Renderer {
                     pos.getX(),
                     pos.getY(),
                     entity.getWidth(),
-                    entity.getHeight()
-                    );
+                    entity.getHeight());
         }
         context.restore();
     }
@@ -69,6 +68,6 @@ public class Renderer {
     public void transformContext(Entity entity) {
         Point2D centre = entity.getCenter();
         Rotate r = new Rotate(entity.getRotation(), centre.getX(), centre.getY());
-        context.setTransform(r.getMxx(), r.getMyx(),r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+        context.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
     }
 }
