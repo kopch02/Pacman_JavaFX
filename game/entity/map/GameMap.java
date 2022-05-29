@@ -10,12 +10,11 @@ import java.io.File;
 import gameplay.Renderer;
 import entity.entity.points.Point;
 
-
 public class GameMap {
     ArrayList<Rectangle> nodes = new ArrayList<>();
     ArrayList<Rectangle> crossroad = new ArrayList<>();
     ArrayList<Integer> y_points = new ArrayList<>();
-    Image point_image=new Image(new File("other/point.png").toURI().toString());
+    Image point_image = new Image(new File("other/point.png").toURI().toString());
 
     public GameMap() {
         y_points.add(35);
@@ -69,39 +68,39 @@ public class GameMap {
         nodes.add(new Rectangle(0, 0, 15, 200));
 
         nodes.add(new Rectangle(0, 200, 135, 60));
-        nodes.add(new Rectangle(120, 215, 15, 60));//тройка лево верх
+        nodes.add(new Rectangle(120, 215, 15, 60));// тройка лево верх
         nodes.add(new Rectangle(0, 275, 135, 15));
 
         nodes.add(new Rectangle(0, 275, 15, 60));//стена лево
         
         nodes.add(new Rectangle(0, 330, 135, 60));
-        nodes.add(new Rectangle(120, 345, 15, 60));//тройка лево низ
+        nodes.add(new Rectangle(120, 345, 15, 60));// тройка лево низ
         nodes.add(new Rectangle(0, 400, 135, 15));
 
         nodes.add(new Rectangle(0, 400, 15, 245));
-        nodes.add(new Rectangle(0, 645, 670, 15));//низ
+        nodes.add(new Rectangle(0, 645, 670, 15));// низ
         nodes.add(new Rectangle(655, 400, 15, 245));
 
         nodes.add(new Rectangle(540, 330, 130, 60));
-        nodes.add(new Rectangle(540, 330, 15, 75));//тройка право низ
+        nodes.add(new Rectangle(540, 330, 15, 75));// тройка право низ
         nodes.add(new Rectangle(540, 400, 123, 15));
 
         nodes.add(new Rectangle(645, 275, 15, 60));//стена право
 
         nodes.add(new Rectangle(540, 200, 130, 60));
-        nodes.add(new Rectangle(540, 215, 15, 75));//тройка право верх
+        nodes.add(new Rectangle(540, 215, 15, 75));// тройка право верх
         nodes.add(new Rectangle(540, 275, 130, 15));
 
         nodes.add(new Rectangle(655, 0, 15, 200));
 
         // клетка в центре
-        nodes.add(new Rectangle(245, 265, 72, 10));//лево верх
-        nodes.add(new Rectangle(357, 265, 68, 10));//право верх
-        nodes.add(new Rectangle(245, 275, 10, 65));//лево
-        nodes.add(new Rectangle(415, 275, 10, 65));//право
-        nodes.add(new Rectangle(245, 340, 180, 10));//низ
+        nodes.add(new Rectangle(245, 265, 72, 10));// лево верх
+        nodes.add(new Rectangle(357, 265, 68, 10));// право верх
+        nodes.add(new Rectangle(245, 275, 10, 65));// лево
+        nodes.add(new Rectangle(415, 275, 10, 65));// право
+        nodes.add(new Rectangle(245, 340, 180, 10));// низ
 
-        //перекрёстки
+        // перекрёстки
         crossroad.add(new Rectangle(135, 100, 40, 40));
         crossroad.add(new Rectangle(500, 100, 40, 40));
         crossroad.add(new Rectangle(135, 290, 40, 40));
@@ -109,7 +108,6 @@ public class GameMap {
         crossroad.add(new Rectangle(135, 415, 40, 40));
         crossroad.add(new Rectangle(500, 415, 40, 40));
 
-        
     }
 
     public void create(GraphicsContext contex) {
@@ -122,8 +120,6 @@ public class GameMap {
 
     }
 
-
-
     private void drawRectangle(GraphicsContext gc, Rectangle rect) {
         gc.setFill(Color.WHITE);
         gc.fillRect(rect.getX(),
@@ -132,6 +128,7 @@ public class GameMap {
                 rect.getHeight());
 
     }
+
     private void drawRectangle2(GraphicsContext gc, Rectangle rect) {
         gc.setFill(Color.GREEN);
         gc.fillRect(rect.getX(),
@@ -208,12 +205,13 @@ public class GameMap {
         }
         return true;
     }
+
     public boolean checkLeft_Ghost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            
+            if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                return false;
+            }
+
         }
         for (Rectangle sprite : nodes) {
             if (within_y(coords, sprite)) {
@@ -222,14 +220,15 @@ public class GameMap {
                 }
             }
         }
-        
+
         return true;
     }
+
     public boolean checkRight_Ghost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                
+            if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                return false;
+
             }
         }
         for (Rectangle sprite : nodes) {
@@ -239,16 +238,16 @@ public class GameMap {
                 }
             }
         }
-        
+
         return true;
     }
 
     public boolean checkUp_Ghost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            
+            if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                return false;
+            }
+
         }
         for (Rectangle sprite : nodes) {
             if (within_x(coords, sprite)) {
@@ -257,16 +256,16 @@ public class GameMap {
                 }
             }
         }
-        
+
         return true;
     }
 
     public boolean checkDown_Ghost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
-                if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                    return false;
-                }
-            
+            if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                return false;
+            }
+
         }
         for (Rectangle sprite : nodes) {
             if (within_x(coords, sprite)) {
@@ -275,41 +274,41 @@ public class GameMap {
                 }
             }
         }
-        
+
         return true;
     }
 
-    public boolean checkLose(Rectangle player,ArrayList<Rectangle> enemy_list ){
-        for(Rectangle enemy : enemy_list){
-       
-        Shape intersect = Shape.intersect(player, enemy);
+    public boolean checkLose(Rectangle player, ArrayList<Rectangle> enemy_list) {
+        for (Rectangle enemy : enemy_list) {
 
-        if(intersect.getBoundsInLocal().getWidth() != -1)
-        {
-            //FXMLLoad("game/menu/MenuView.fxml");
-            return true;
+            Shape intersect = Shape.intersect(player, enemy);
+
+            if (intersect.getBoundsInLocal().getWidth() != -1) {
+                // FXMLLoad("game/menu/MenuView.fxml");
+                return true;
+            }
         }
-    }
         return false;
     }
+
     public void create_points(Renderer renderer) {
-        nodes.add(new Rectangle(255,275,180,60));
-        for(int x = 31; x < 655; x+=37) {
-            for(int y = 25; y < 645; y+=31) {
-                if (checkPoint(x,y)){
-                    renderer.addEntity(new Point(point_image,x,y));
+        nodes.add(new Rectangle(255, 275, 180, 60));
+        for (int x = 31; x < 655; x += 37) {
+            for (int y = 25; y < 645; y += 31) {
+                if (checkPoint(x, y)) {
+                    renderer.addEntity(new Point(point_image, x, y));
                 }
             }
          }
         nodes.remove(nodes.size()-1);
     }
-    public boolean checkPoint(float x, float y){
-        Rectangle temp=new Rectangle(x, y, 20, 20);
+
+    public boolean checkPoint(float x, float y) {
+        Rectangle temp = new Rectangle(x, y, 20, 20);
         for (Rectangle sprite : nodes) {
             Shape intersect = Shape.intersect(temp, sprite);
-            if(intersect.getBoundsInLocal().getWidth() != -1)
-            {
-                //FXMLLoad("game/menu/MenuView.fxml");
+            if (intersect.getBoundsInLocal().getWidth() != -1) {
+                // FXMLLoad("game/menu/MenuView.fxml");
                 return false;
             }
         }

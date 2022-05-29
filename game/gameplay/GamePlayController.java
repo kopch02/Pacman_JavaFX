@@ -1,11 +1,13 @@
 package gameplay;
 
 import java.io.File;
+import java.io.IOException;
 
+import entity.entity.Entity.DIRECTION;
 import entity.entity.player.Player;
-import entity.entity.player.Player.DIRECTION;
 import entity.entity.enemy.Ghost;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -13,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.GraphicsContext;//под отображение
+import javafx.scene.control.Label;
 import entity.map.GameMap;//под отображение
 
 public class GamePlayController {
@@ -24,29 +27,35 @@ public class GamePlayController {
     @FXML
     public Canvas gameCanvas;
 
+    @FXML
+    static Label score;
+
     KeyPolling keys = KeyPolling.getInstance();
 
-    ArrayList<Rectangle> ghost_list = new ArrayList<>();
+    ArrayList<Rectangle> ghostList = new ArrayList<>();
 
-    Image upImage_orange=new Image(new File("other/gosts/orange/up.png").toURI().toString());
-    Image downImage_orange=new Image(new File("other/gosts/orange/down.png").toURI().toString());
-    Image leftImage_orange=new Image(new File("other/gosts/orange/left.png").toURI().toString());
-    Image rightImage_orange=new Image(new File("other/gosts/orange/right.png").toURI().toString());
+    Image upImageOrange = new Image(new File("other/ghosts/orange/up.png").toURI().toString());
+    Image downImageOrange = new Image(new File("other/ghosts/orange/down.png").toURI().toString());
+    Image leftImageOrange = new Image(new File("other/ghosts/orange/left.png").toURI().toString());
+    Image rightImageOrange = new Image(new File("other/ghosts/orange/right.png").toURI().toString());
 
-    Image upImage_blue=new Image(new File("other/gosts/blue/up.png").toURI().toString());
-    Image downImage_blue=new Image(new File("other/gosts/blue/down.png").toURI().toString());
-    Image leftImage_blue=new Image(new File("other/gosts/blue/left.png").toURI().toString());
-    Image rightImage_blue=new Image(new File("other/gosts/blue/right.png").toURI().toString());
+    Image upImageBlue = new Image(new File("other/ghosts/blue/up.png").toURI().toString());
+    Image downImageBlue = new Image(new File("other/ghosts/blue/down.png").toURI().toString());
+    Image leftImageBlue = new Image(new File("other/ghosts/blue/left.png").toURI().toString());
+    Image rightImageBlue = new Image(new File("other/ghosts/blue/right.png").toURI().toString());
 
     private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()));
 
-    private Ghost orange_ghost = new Ghost(upImage_orange,downImage_orange,leftImage_orange,rightImage_orange);
-    private Ghost blue_ghost = new Ghost(upImage_blue,downImage_blue,leftImage_blue,rightImage_blue);
-
+    private Ghost orangeGhost = new Ghost(upImageOrange, downImageOrange, leftImageOrange, rightImageOrange);
+    private Ghost blueGhost = new Ghost(upImageBlue, downImageBlue, leftImageBlue, rightImageBlue);
 
     private void initializeCanvas() {
         gameCanvas.widthProperty().bind(mainRoot.widthProperty());
         gameCanvas.heightProperty().bind(mainRoot.heightProperty());
+    }
+
+    public static String getScore() {
+        return score.getText();
     }
 
     public void initialize() {
@@ -56,22 +65,22 @@ public class GamePlayController {
         player.setScale(1.0f);
         player.setMove(true);
 
-        orange_ghost.setDrawPosition(15, 15);
-        orange_ghost.setScale(1.0f);
-        orange_ghost.setMove(true);
+        orangeGhost.setDrawPosition(15, 15);
+        orangeGhost.setScale(1.0f);
+        orangeGhost.setMove(true);
 
-        blue_ghost.setDrawPosition(615, 15);
-        blue_ghost.setScale(1.0f);
-        blue_ghost.setMove(true);
+        blueGhost.setDrawPosition(615, 15);
+        blueGhost.setScale(1.0f);
+        blueGhost.setMove(true);
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
-        GraphicsContext context = gameCanvas.getGraphicsContext2D();// под отображение
+        // GraphicsContext context = gameCanvas.getGraphicsContext2D();// под
+        // отображение
         gamemap.create_points(renderer);
         renderer.addEntity(player);
-        renderer.addEntity(orange_ghost);
-        renderer.addEntity(blue_ghost);
-        
+        renderer.addEntity(orangeGhost);
+        renderer.addEntity(blueGhost);
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -79,21 +88,22 @@ public class GamePlayController {
                 renderer.prepare();
                 updatePlayerMovement();
                 player.update(player.getCurDirection());
-                orange_ghost.update(player.getCenter());
-                blue_ghost.update(player.getCenter());
+                orangeGhost.update(player.getCenter());
+                blueGhost.update(player.getCenter());
                 renderer.render();
-                ghost_list.add(orange_ghost.getSprite());
-                ghost_list.add(blue_ghost.getSprite());
-                player.setDead(gamemap.checkLose(player.getSprite(),ghost_list));
-                ghost_list.clear();
-                //gamemap.create(context);// под отображение
-                
+                ghostList.add(orangeGhost.getSprite());
+                ghostList.add(blueGhost.getSprite());
+                player.setDead(gamemap.checkLose(player.getSprite(), ghostList));
+                if (isDying()) {
+                    stop();
+                }
+                ghostList.clear();
+                // gamemap.create(context);// под отображение
+
             }
         };
         timer.start();
     }
-
-    
 
     private void updatePlayerMovement() {
         if (keys.isDown(KeyCode.W)) {
@@ -105,6 +115,21 @@ public class GamePlayController {
         } else if (keys.isDown(KeyCode.D)) {
             player.setDirection(DIRECTION.right);
         }
+    }
+
+    private boolean isDying() {
+        if (this.player.isDead()) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
+            AnchorPane pane;
+            try {
+                pane = fxmlLoader.load();
+                mainRoot.getChildren().setAll(pane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
     }
 
 }

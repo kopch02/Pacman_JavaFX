@@ -3,11 +3,8 @@ package entity.entity.player;
 import java.io.File;
 
 import entity.entity.Entity;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import entity.map.GameMap;
 
 public class Player extends Entity {
 
@@ -15,15 +12,9 @@ public class Player extends Entity {
     Image downImage;
     Image leftImage;
     Image rightImage;
-    DIRECTION curDir;
     float speed = 1;
-    boolean isDead=false;
-
-    GameMap gamemap = new GameMap();
-
-    public static enum DIRECTION {
-        up, down, left, right
-    }
+    boolean Dead = false;
+    static String name;
 
     public Player(Image entityImage) {
         super(entityImage);
@@ -34,25 +25,33 @@ public class Player extends Entity {
         rightImage = new Image(new File("other/right.gif").toURI().toString());
     }
 
+    public static void setName(String name) {
+        Player.name = name;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
     public void update(DIRECTION value) {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
-                if (gamemap.checkUp(getcoords())) {
+                if (gamemap.checkUp(getCoords())) {
                     this.entityImage = upImage;
                     moveUp();
                 }
             } else if (this.curDir == DIRECTION.down) {
-                if (gamemap.checkDown(getcoords())) {
+                if (gamemap.checkDown(getCoords())) {
                     this.entityImage = downImage;
                     moveDown();
                 }
             } else if (this.curDir == DIRECTION.left) {
-                if (gamemap.checkLeft(getcoords())) {
+                if (gamemap.checkLeft(getCoords())) {
                     this.entityImage = leftImage;
                     moveLeft();
                 }
             } else {
-                if (gamemap.checkRight(getcoords())) {
+                if (gamemap.checkRight(getCoords())) {
                     this.entityImage = rightImage;
                     moveRight();
                 }
@@ -61,18 +60,14 @@ public class Player extends Entity {
         }
     }
 
-    public DIRECTION getCurDirection() {
-        return this.curDir;
-    }
-
     public void setDirection(DIRECTION dir) {
-        if (dir == DIRECTION.up && gamemap.checkUp(getcoords())) {
+        if (dir == DIRECTION.up && gamemap.checkUp(getCoords())) {
             this.curDir = DIRECTION.up;
-        } else if (dir == DIRECTION.down && gamemap.checkDown(getcoords())) {
+        } else if (dir == DIRECTION.down && gamemap.checkDown(getCoords())) {
             this.curDir = DIRECTION.down;
-        } else if (dir == DIRECTION.left && gamemap.checkLeft(getcoords())) {
+        } else if (dir == DIRECTION.left && gamemap.checkLeft(getCoords())) {
             this.curDir = DIRECTION.left;
-        } else if (dir == DIRECTION.right && gamemap.checkRight(getcoords())) {
+        } else if (dir == DIRECTION.right && gamemap.checkRight(getCoords())) {
             this.curDir = DIRECTION.right;
         }
     }
@@ -97,12 +92,12 @@ public class Player extends Entity {
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
 
-    public void setDead(boolean res){
-        isDead = res;
+    public void setDead(boolean t) {
+        Dead = t;
     }
 
-    public boolean getDead(){
-        return isDead;
+    public boolean isDead() {
+        return Dead;
     }
 
 }
