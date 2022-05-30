@@ -24,6 +24,10 @@ public class RedGhost extends Ghost{
     public RedGhost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage){
         super(UpImage, DownImage, LeftImage, RightImage);
         this.curDir = DIRECTION.down;
+        upImage = super.getImage();
+        downImage = DownImage;
+        leftImage = LeftImage;
+        rightImage = RightImage;
 
     }
 
@@ -155,5 +159,58 @@ public class RedGhost extends Ghost{
         }
     }
 
+    public void moving(DIRECTION direction) {
+        if (this.isMoving()) {
+            if (this.curDir == DIRECTION.up) {
+                if (gamemap.checkUp_Ghost(getCoords())) {
+                    this.entityImage = upImage;
+                    moveUp();
+                } else {
+                    this.is_a_direction = false;
+                }
+            } else if (this.curDir == DIRECTION.down) {
+                if (gamemap.checkDown_Ghost(getCoords())) {
+                    this.entityImage = downImage;
+                    moveDown();
+                } else {
+                    this.is_a_direction = false;
+                }
+            } else if (this.curDir == DIRECTION.left) {
+                if (gamemap.checkLeft_Ghost(getCoords())) {
+                    this.entityImage = leftImage;
+                    moveLeft();
+                } else {
+                    this.is_a_direction = false;
+                }
+            } else if (this.curDir == DIRECTION.right) {
+                if (gamemap.checkRight_Ghost(getCoords())) {
+                    this.entityImage = rightImage;
+                    moveRight();
+                } else {
+                    this.is_a_direction = false;
+                }
+            }
+        }
+    }
+
+    public void moveUp() {
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX(), (float) curPos.getY() - speed);
+    }
+
+    public void moveDown() {
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX(), (float) curPos.getY() + speed);
+    }
+
+    public void moveLeft() {
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX() - speed, (float) curPos.getY());
+    }
+
+    public void moveRight() {
+        Point2D curPos = getDrawPosition();
+        setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
+    }
     
 }

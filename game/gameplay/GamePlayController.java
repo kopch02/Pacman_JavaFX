@@ -6,6 +6,7 @@ import java.io.IOException;
 import entity.entity.Entity.DIRECTION;
 import entity.entity.player.Player;
 import entity.entity.enemy.ghosts.RedGhost;
+import entity.entity.enemy.ghosts.PinkGhost;
 import entity.entity.enemy.Ghost;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,15 +41,15 @@ public class GamePlayController {
     Image leftImageRed = new Image(new File("other/ghosts/red/left.png").toURI().toString());
     Image rightImageRed = new Image(new File("other/ghosts/red/right.png").toURI().toString());
 
-    Image upImageBlue = new Image(new File("other/ghosts/blue/up.png").toURI().toString());
-    Image downImageBlue = new Image(new File("other/ghosts/blue/down.png").toURI().toString());
-    Image leftImageBlue = new Image(new File("other/ghosts/blue/left.png").toURI().toString());
-    Image rightImageBlue = new Image(new File("other/ghosts/blue/right.png").toURI().toString());
+    Image upImagePink = new Image(new File("other/ghosts/pink/up.png").toURI().toString());
+    Image downImagePink = new Image(new File("other/ghosts/pink/down.png").toURI().toString());
+    Image leftImagePink = new Image(new File("other/ghosts/pink/left.png").toURI().toString());
+    Image rightImagePink = new Image(new File("other/ghosts/pink/right.png").toURI().toString());
 
     private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()));
 
     private RedGhost redGhost = new RedGhost(upImageRed, downImageRed, leftImageRed, rightImageRed);
-    private Ghost blueGhost = new Ghost(upImageBlue, downImageBlue, leftImageBlue, rightImageBlue);
+    private PinkGhost pinkGhost = new PinkGhost(upImagePink, downImagePink, leftImagePink, rightImagePink);
     static String score;
     int x = 0;
 
@@ -69,9 +70,9 @@ public class GamePlayController {
         redGhost.setScale(1.0f);
         redGhost.setMove(true);
 
-        blueGhost.setDrawPosition(615, 15);
-        blueGhost.setScale(1.0f);
-        blueGhost.setMove(true);
+        pinkGhost.setDrawPosition(615, 15);
+        pinkGhost.setScale(1.0f);
+        pinkGhost.setMove(true);
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         // GraphicsContext context = gameCanvas.getGraphicsContext2D();// под
@@ -79,7 +80,7 @@ public class GamePlayController {
         gamemap.create_points(renderer);
         renderer.addEntity(player);
         renderer.addEntity(redGhost);
-        //renderer.addEntity(blueGhost);
+        renderer.addEntity(pinkGhost);
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -89,11 +90,11 @@ public class GamePlayController {
                 updatePlayerMovement();
                 player.update(player.getCurDirection());
                 redGhost.update(player.getCenter());
-                //blueGhost.update(player.getCenter());
+                pinkGhost.update(player.getCenter());
                 scorelLabel.setText(String.valueOf(x));
                 renderer.render();
                 ghostList.add(redGhost);
-                //ghostList.add(blueGhost);
+                ghostList.add(pinkGhost);
                 gamemap.eatpoint(player.getSprite(),renderer);
                 scorelLabel.setText(gamemap.getScore());
                 player.setDead(gamemap.checkLose(player.getSprite(), ghostList));
