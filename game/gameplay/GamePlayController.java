@@ -93,6 +93,7 @@ public class GamePlayController {
                 renderer.render();
                 ghostList.add(orangeGhost.getSprite());
                 ghostList.add(blueGhost.getSprite());
+                gamemap.eatpoint(player.getSprite(),renderer);
                 player.setDead(gamemap.checkLose(player.getSprite(), ghostList));
                 if (isDying()) {
                     stop();

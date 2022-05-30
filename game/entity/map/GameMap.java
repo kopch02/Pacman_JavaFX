@@ -305,18 +305,18 @@ public class GameMap {
         for (Rectangle sprite : nodes) {
             Shape intersect = Shape.intersect(temp, sprite);
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                // FXMLLoad("game/menu/MenuView.fxml");
                 return false;
             }
         }
         return true;
     }
 
-    public boolean eatpoint(Rectangle player) {
+    public boolean eatpoint(Rectangle player,Renderer renderer) {
         for (Point point : pointList) {
             Shape intersect = Shape.intersect(player, point.getSprite());
             if (intersect.getBoundsInLocal().getWidth() != -1) {
                 score++;
+                renderer.removeEntity(point);
                 pointList.remove(point);
             }
         }
