@@ -3,6 +3,7 @@ package entity.entity.player;
 import java.io.File;
 
 import entity.entity.Entity;
+import entity.map.GameMap;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
@@ -16,8 +17,8 @@ public class Player extends Entity {
     boolean Dead = false;
     static String name;
 
-    public Player(Image entityImage) {
-        super(entityImage);
+    public Player(Image entityImage, GameMap gameMap) {
+        super(entityImage, gameMap);
         upImage = super.getImage();
 
         downImage = new Image(new File("other/down.gif").toURI().toString());
@@ -36,22 +37,22 @@ public class Player extends Entity {
     public void update(DIRECTION value) {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
-                if (gamemap.checkUp(getCoords())) {
+                if (gameMap.checkUp(getCoords())) {
                     this.entityImage = upImage;
                     moveUp();
                 }
             } else if (this.curDir == DIRECTION.down) {
-                if (gamemap.checkDown(getCoords())) {
+                if (gameMap.checkDown(getCoords())) {
                     this.entityImage = downImage;
                     moveDown();
                 }
             } else if (this.curDir == DIRECTION.left) {
-                if (gamemap.checkLeft(getCoords())) {
+                if (gameMap.checkLeft(getCoords())) {
                     this.entityImage = leftImage;
                     moveLeft();
                 }
             } else {
-                if (gamemap.checkRight(getCoords())) {
+                if (gameMap.checkRight(getCoords())) {
                     this.entityImage = rightImage;
                     moveRight();
                 }
@@ -61,13 +62,13 @@ public class Player extends Entity {
     }
 
     public void setDirection(DIRECTION dir) {
-        if (dir == DIRECTION.up && gamemap.checkUp(getCoords())) {
+        if (dir == DIRECTION.up && gameMap.checkUp(getCoords())) {
             this.curDir = DIRECTION.up;
-        } else if (dir == DIRECTION.down && gamemap.checkDown(getCoords())) {
+        } else if (dir == DIRECTION.down && gameMap.checkDown(getCoords())) {
             this.curDir = DIRECTION.down;
-        } else if (dir == DIRECTION.left && gamemap.checkLeft(getCoords())) {
+        } else if (dir == DIRECTION.left && gameMap.checkLeft(getCoords())) {
             this.curDir = DIRECTION.left;
-        } else if (dir == DIRECTION.right && gamemap.checkRight(getCoords())) {
+        } else if (dir == DIRECTION.right && gameMap.checkRight(getCoords())) {
             this.curDir = DIRECTION.right;
         }
     }

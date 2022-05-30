@@ -5,8 +5,7 @@ import javafx.scene.image.Image;
 import javafx.geometry.Point2D;
 import entity.map.GameMap;
 
-
-public class RedGhost extends Ghost{
+public class RedGhost extends Ghost {
 
     Image upImage;
     Image downImage;
@@ -19,10 +18,8 @@ public class RedGhost extends Ghost{
     double distance2;
     DIRECTION curDir;
 
-    GameMap gamemap = new GameMap();
-
-    public RedGhost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage){
-        super(UpImage, DownImage, LeftImage, RightImage);
+    public RedGhost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage, GameMap gameMap) {
+        super(UpImage, DownImage, LeftImage, RightImage, gameMap);
         this.curDir = DIRECTION.down;
         upImage = super.getImage();
         downImage = DownImage;
@@ -41,13 +38,13 @@ public class RedGhost extends Ghost{
                 if (ghost_center.getY() < player_center.getY()) {// левее и выше
                     this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() + 40) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY()) - player_center.getY()), 2));
-                            this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
+                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY() + 40) - player_center.getY()), 2));
                     if (this.distance1 < this.distance2) {
-                        if (gamemap.checkRight(getCoords())) {
+                        if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
                             moveRight();
-                        } else if (gamemap.checkDown(getCoords())) {
+                        } else if (gameMap.checkDown(getCoords())) {
                             this.curDir = DIRECTION.down;
                             moveDown();
                         } else {
@@ -55,10 +52,10 @@ public class RedGhost extends Ghost{
                             moveLeft();
                         }
                     } else {
-                        if (gamemap.checkDown(getCoords())) {
+                        if (gameMap.checkDown(getCoords())) {
                             this.curDir = DIRECTION.down;
                             moveDown();
-                        } else if (gamemap.checkRight(getCoords())) {
+                        } else if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
                             moveRight();
                         } else {
@@ -69,13 +66,13 @@ public class RedGhost extends Ghost{
                 } else {// левее и ниже
                     this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() + 40) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY()) - player_center.getY()), 2));
-                            this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
+                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY() - 40) - player_center.getY()), 2));
                     if (this.distance1 < this.distance2) {
-                        if (gamemap.checkRight(getCoords())) {
+                        if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
                             moveRight();
-                        } else if (gamemap.checkUp(getCoords())) {
+                        } else if (gameMap.checkUp(getCoords())) {
                             this.curDir = DIRECTION.up;
                             moveUp();
                         } else {
@@ -83,10 +80,10 @@ public class RedGhost extends Ghost{
                             moveDown();
                         }
                     } else {
-                        if (gamemap.checkUp(getCoords())) {
+                        if (gameMap.checkUp(getCoords())) {
                             this.curDir = DIRECTION.up;
                             moveUp();
-                        } else if (gamemap.checkRight(getCoords())) {
+                        } else if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
                             moveRight();
                         } else {
@@ -99,13 +96,13 @@ public class RedGhost extends Ghost{
                 if (ghost_center.getY() < player_center.getY()) {// гост правее и выше
                     this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() - 40) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY()) - player_center.getY()), 2));
-                            this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
+                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY() + 40) - player_center.getY()), 2));
                     if (this.distance1 < this.distance2) {
-                        if (gamemap.checkLeft(getCoords())) {
+                        if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
                             moveLeft();
-                        } else if (gamemap.checkDown(getCoords())) {
+                        } else if (gameMap.checkDown(getCoords())) {
                             this.curDir = DIRECTION.down;
                             moveDown();
                         } else {
@@ -113,10 +110,10 @@ public class RedGhost extends Ghost{
                             moveUp();
                         }
                     } else {
-                        if (gamemap.checkDown(getCoords())) {
+                        if (gameMap.checkDown(getCoords())) {
                             this.curDir = DIRECTION.down;
                             moveDown();
-                        } else if (gamemap.checkLeft(getCoords())) {
+                        } else if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
                             moveLeft();
                         } else {
@@ -127,13 +124,13 @@ public class RedGhost extends Ghost{
                 } else {// гост правее и ниже
                     this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() - 40) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY()) - player_center.getY()), 2));
-                            this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
+                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX()), 2)
                             + Math.pow(((ghost_center.getY() - 40) - player_center.getY()), 2));
                     if (this.distance1 < this.distance2) {
-                        if (gamemap.checkLeft(getCoords())) {
+                        if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
                             moveLeft();
-                        } else if (gamemap.checkUp(getCoords())) {
+                        } else if (gameMap.checkUp(getCoords())) {
                             this.curDir = DIRECTION.up;
                             moveUp();
                         } else {
@@ -141,10 +138,10 @@ public class RedGhost extends Ghost{
                             moveRight();
                         }
                     } else {
-                        if (gamemap.checkUp(getCoords())) {
+                        if (gameMap.checkUp(getCoords())) {
                             this.curDir = DIRECTION.up;
                             moveUp();
-                        } else if (gamemap.checkLeft(getCoords())) {
+                        } else if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
                             moveLeft();
                         } else {
@@ -162,28 +159,28 @@ public class RedGhost extends Ghost{
     public void moving(DIRECTION direction) {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
-                if (gamemap.checkUp_Ghost(getCoords())) {
+                if (gameMap.checkUp_Ghost(getCoords())) {
                     this.entityImage = upImage;
                     moveUp();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.down) {
-                if (gamemap.checkDown_Ghost(getCoords())) {
+                if (gameMap.checkDown_Ghost(getCoords())) {
                     this.entityImage = downImage;
                     moveDown();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.left) {
-                if (gamemap.checkLeft_Ghost(getCoords())) {
+                if (gameMap.checkLeft_Ghost(getCoords())) {
                     this.entityImage = leftImage;
                     moveLeft();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
-                if (gamemap.checkRight_Ghost(getCoords())) {
+                if (gameMap.checkRight_Ghost(getCoords())) {
                     this.entityImage = rightImage;
                     moveRight();
                 } else {
@@ -212,5 +209,5 @@ public class RedGhost extends Ghost{
         Point2D curPos = getDrawPosition();
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
-    
+
 }

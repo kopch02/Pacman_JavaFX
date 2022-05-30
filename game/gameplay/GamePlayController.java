@@ -15,13 +15,12 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.canvas.GraphicsContext;//под отображение
 import javafx.scene.control.Label;
-import entity.map.GameMap;//под отображение
+import entity.map.GameMap;
 
 public class GamePlayController {
-    GameMap gamemap = new GameMap();// под отображение
+    GameMap gameMap = new GameMap();
 
     @FXML
     public AnchorPane mainRoot;
@@ -46,12 +45,11 @@ public class GamePlayController {
     Image leftImagePink = new Image(new File("other/ghosts/pink/left.png").toURI().toString());
     Image rightImagePink = new Image(new File("other/ghosts/pink/right.png").toURI().toString());
 
-    private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()));
+    private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap);
 
-    private RedGhost redGhost = new RedGhost(upImageRed, downImageRed, leftImageRed, rightImageRed);
-    private PinkGhost pinkGhost = new PinkGhost(upImagePink, downImagePink, leftImagePink, rightImagePink);
+    private RedGhost redGhost = new RedGhost(upImageRed, downImageRed, leftImageRed, rightImageRed, gameMap);
+    private PinkGhost pinkGhost = new PinkGhost(upImagePink, downImagePink, leftImagePink, rightImagePink, gameMap);
     static String score;
-    int x = 0;
 
     private void initializeCanvas() {
         gameCanvas.widthProperty().bind(mainRoot.widthProperty());
@@ -77,7 +75,7 @@ public class GamePlayController {
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         // GraphicsContext context = gameCanvas.getGraphicsContext2D();// под
         // отображение
-        gamemap.create_points(renderer);
+        gameMap.create_points(renderer);
         renderer.addEntity(player);
         renderer.addEntity(redGhost);
         renderer.addEntity(pinkGhost);
@@ -85,19 +83,17 @@ public class GamePlayController {
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
             public void tick(float secondsSinceLastFrame) {
-                x++;
                 renderer.prepare();
                 updatePlayerMovement();
                 player.update(player.getCurDirection());
                 redGhost.update(player.getCenter());
                 pinkGhost.update(player.getCenter());
-                scorelLabel.setText(String.valueOf(x));
                 renderer.render();
                 ghostList.add(redGhost);
                 ghostList.add(pinkGhost);
-                gamemap.eatpoint(player.getSprite(),renderer);
-                scorelLabel.setText(gamemap.getScore());
-                player.setDead(gamemap.checkLose(player.getSprite(), ghostList));
+                gameMap.eatpoint(player.getSprite(), renderer);
+                scorelLabel.setText(gameMap.getScore());
+                player.setDead(gameMap.checkLose(player.getSprite(), ghostList));
                 if (isDying()) {
                     stop();
                 }

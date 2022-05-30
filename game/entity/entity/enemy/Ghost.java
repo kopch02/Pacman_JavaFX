@@ -18,10 +18,9 @@ public class Ghost extends Entity {
     double distance1;
     double distance2;
 
-    GameMap gamemap = new GameMap();
 
-    public Ghost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage) {
-        super(UpImage);
+    public Ghost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage, GameMap gameMap) {
+        super(UpImage, gameMap);
         this.curDir = DIRECTION.up;
         upImage = super.getImage();
         downImage = DownImage;
@@ -35,28 +34,28 @@ public class Ghost extends Entity {
         if (this.isMoving()) {
             System.out.println("moving");
             if (this.curDir == DIRECTION.up) {
-                if (gamemap.checkUp_Ghost(getCoords())) {
+                if (gameMap.checkUp_Ghost(getCoords())) {
                     this.entityImage = upImage;
                     moveUp();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.down) {
-                if (gamemap.checkDown_Ghost(getCoords())) {
+                if (gameMap.checkDown_Ghost(getCoords())) {
                     this.entityImage = downImage;
                     moveDown();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.left) {
-                if (gamemap.checkLeft_Ghost(getCoords())) {
+                if (gameMap.checkLeft_Ghost(getCoords())) {
                     this.entityImage = leftImage;
                     moveLeft();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
-                if (gamemap.checkRight_Ghost(getCoords())) {
+                if (gameMap.checkRight_Ghost(getCoords())) {
                     this.entityImage = rightImage;
                     moveRight();
                 } else {

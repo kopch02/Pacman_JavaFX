@@ -3,6 +3,8 @@ package entity.map;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.image.Image;
@@ -14,13 +16,14 @@ import entity.entity.enemy.Ghost;
 public class GameMap {
     ArrayList<Rectangle> nodes = new ArrayList<>();
     ArrayList<Rectangle> crossroad = new ArrayList<>();
-    ArrayList<Point> pointList = new ArrayList<>();
-    ArrayList<Point> megapointList = new ArrayList<>();
+    ArrayList<Point> pointList = new ArrayList<Point>();
+    ArrayList<Point> megapointList = new ArrayList<Point>();
     Image point_image = new Image(new File("other/point.png").toURI().toString());
     Image megapoint_image = new Image(new File("other/megapoint.png").toURI().toString());
 
-    boolean angry=false;
-    Integer score=0;
+    boolean angry = false;
+    long angryTime;
+    Integer score = 0;
 
     public GameMap() {
 
@@ -283,11 +286,10 @@ public class GameMap {
             Shape intersect = Shape.intersect(player, enemy.getSprite());
 
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                if (angry){
+                if (angry) {
                     enemy.setDrawPosition(320, 225);
-                }
-                else{
-                return true;
+                } else {
+                    return true;
                 }
             }
         }
@@ -299,7 +301,7 @@ public class GameMap {
         for (int x = 31; x < 655; x += 37) {
             for (int y = 25; y < 645; y += 31) {
                 if (checkPoint(x, y)) {
-                    pointList.add(new Point(point_image, x, y));
+                    pointList.add(new Point(point_image, x, y, this));
                 }
             }
         }
@@ -307,13 +309,13 @@ public class GameMap {
         for (Point point : pointList) {
             renderer.addEntity(point);
         }
-        megapointList.add(new Point(megapoint_image,135,100));
-        megapointList.add(new Point(megapoint_image,500,100));
-        megapointList.add(new Point(megapoint_image,65,475));
-        megapointList.add(new Point(megapoint_image,570,475));
+        megapointList.add(new Point(megapoint_image, 135, 100, this));
+        megapointList.add(new Point(megapoint_image, 500, 100, this));
+        megapointList.add(new Point(megapoint_image, 65, 475, this));
+        megapointList.add(new Point(megapoint_image, 570, 475, this));
 
         for (Point megapoint : megapointList) {
-            megapoint.setScale((float)1);
+            megapoint.setScale((float) 1);
             renderer.addEntity(megapoint);
         }
     }
@@ -329,32 +331,40 @@ public class GameMap {
         return true;
     }
 
-    public boolean eatpoint(Rectangle player,Renderer renderer) {
-        
-        for (Point point : pointList) {
+    public boolean eatpoint(Rectangle player, Renderer renderer) {
+        for (Iterator<Point> itr = pointList.iterator(); itr.hasNext();) {
+            Point point = itr.next();
             Shape intersect = Shape.intersect(player, point.getSprite());
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                score+=5;
+                score += 5;
                 renderer.removeEntity(point);
-                pointList.remove(point);
+                itr.remove();
             }
         }
-        for (Point megapoint : megapointList) {
-            Shape intersect = Shape.intersect(player, megapoint.getSprite());
+        for (Iterator<Point> itr = megapointList.iterator(); itr.hasNext();) {
+            Point megaPoint = itr.next();
+            Shape intersect = Shape.intersect(player, megaPoint.getSprite());
+            long now = System.currentTimeMillis();
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                score+=20;
-                renderer.removeEntity(megapoint);
-                megapointList.remove(megapoint);
-                angry=true;
+                angryTime = now;
+                score += 5;
+                renderer.removeEntity(megaPoint);
+                itr.remove();
+                angry = true;
+                
+            }
+
+            if (angryTime + 3000 < now) {
+                angry = false;
             }
         }
-        if (pointList.size()==0 && megapointList.size()==0){
+        if (pointList.size() == 0 && megapointList.size() == 0) {
             create_points(renderer);
         }
         return true;
     }
 
-    public String getScore(){
+    public String getScore() {
         return String.valueOf(score);
     }
 }
