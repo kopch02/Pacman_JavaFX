@@ -11,6 +11,8 @@ javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -c
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -classpath "game/classes" game/entity/entity/enemy/Ghost.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -classpath "game/classes" game/entity/entity/points/Point.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -classpath "game/classes" game/menu/death/DeathController.java
+javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -classpath "game/classes" game/entity/entity/enemy/ghosts/RedGhost.java
+
 
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -classpath "game/classes" game/Main.java
 
