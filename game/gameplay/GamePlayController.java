@@ -28,7 +28,7 @@ public class GamePlayController {
     public Canvas gameCanvas;
 
     @FXML
-    static Label score;
+    Label scorelLabel;
 
     KeyPolling keys = KeyPolling.getInstance();
 
@@ -48,17 +48,16 @@ public class GamePlayController {
 
     private Ghost orangeGhost = new Ghost(upImageOrange, downImageOrange, leftImageOrange, rightImageOrange);
     private Ghost blueGhost = new Ghost(upImageBlue, downImageBlue, leftImageBlue, rightImageBlue);
+    static String score;
+    int x = 0;
 
     private void initializeCanvas() {
         gameCanvas.widthProperty().bind(mainRoot.widthProperty());
         gameCanvas.heightProperty().bind(mainRoot.heightProperty());
     }
 
-    public static String getScore() {
-        return score.getText();
-    }
-
     public void initialize() {
+
         mainRoot.setFocusTraversable(true);
         initializeCanvas();
         player.setDrawPosition(315, 350);
@@ -72,7 +71,6 @@ public class GamePlayController {
         blueGhost.setDrawPosition(615, 15);
         blueGhost.setScale(1.0f);
         blueGhost.setMove(true);
-
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         // GraphicsContext context = gameCanvas.getGraphicsContext2D();// под
@@ -85,11 +83,13 @@ public class GamePlayController {
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
             public void tick(float secondsSinceLastFrame) {
+                x++;
                 renderer.prepare();
                 updatePlayerMovement();
                 player.update(player.getCurDirection());
                 orangeGhost.update(player.getCenter());
                 blueGhost.update(player.getCenter());
+                scorelLabel.setText(String.valueOf(x));
                 renderer.render();
                 ghostList.add(orangeGhost.getSprite());
                 ghostList.add(blueGhost.getSprite());
@@ -119,6 +119,7 @@ public class GamePlayController {
 
     private boolean isDying() {
         if (this.player.isDead()) {
+            score = scorelLabel.getText();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
             AnchorPane pane;
             try {
@@ -130,6 +131,10 @@ public class GamePlayController {
             return true;
         }
         return false;
+    }
+
+    public static String getScore() {
+        return score;
     }
 
 }

@@ -24,8 +24,7 @@ public class DeathController {
     @FXML
     public void initialize() {
         net = new Net();
-        net.sendToServer(Player.getName(), "100");
-
+        net.sendToServer(Player.getName(), GamePlayController.getScore());
     }
 
     @FXML
