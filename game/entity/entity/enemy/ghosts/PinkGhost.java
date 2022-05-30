@@ -4,6 +4,7 @@ import entity.entity.enemy.Ghost;
 import javafx.scene.image.Image;
 import javafx.geometry.Point2D;
 import entity.map.GameMap;
+import java.io.File;
 
 public class PinkGhost extends Ghost {
 
@@ -11,6 +12,12 @@ public class PinkGhost extends Ghost {
     Image downImage;
     Image leftImage;
     Image rightImage;
+
+    Image upImageFear;
+    Image downImageFear;
+    Image leftImageFear;
+    Image rightImageFear;
+
     float speed = 1;
     boolean is_a_direction = false;
     Point2D ghost_center;
@@ -28,9 +35,21 @@ public class PinkGhost extends Ghost {
         leftImage = LeftImage;
         rightImage = RightImage;
 
+        upImageFear = new Image(new File("other/ghosts/pink/upFear.png").toURI().toString());
+        downImageFear = new Image(new File("other/ghosts/pink/downFear.png").toURI().toString());
+        leftImageFear = new Image(new File("other/ghosts/pink/leftFear.png").toURI().toString());
+        rightImageFear = new Image(new File("other/ghosts/pink/rightFear.png").toURI().toString());
+
+        setMove(false);
+        setScale(1.0f);
+        setDrawPosition(270, 290);
+
     }
 
     public void update(Point2D player_center) {
+        if (Integer.valueOf(gameMap.getScore())>=100){
+            setMove(true);
+        }
         ghost_center = getCenter();
         if (this.is_a_direction) {
             moving(this.curDir);
@@ -174,28 +193,48 @@ public class PinkGhost extends Ghost {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
                 if (gameMap.checkUp_Ghost(getCoords())) {
-                    this.entityImage = upImage;
+                    if (gameMap.getAngry()){
+                        this.entityImage = upImageFear;
+                    }
+                    else{
+                        this.entityImage = upImage;
+                    }
                     moveUp();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.down) {
                 if (gameMap.checkDown_Ghost(getCoords())) {
-                    this.entityImage = downImage;
+                    if (gameMap.getAngry()){
+                        this.entityImage = downImageFear;
+                    }
+                    else{    
+                        this.entityImage = downImage;
+                    }
                     moveDown();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.left) {
                 if (gameMap.checkLeft_Ghost(getCoords())) {
+                    if (gameMap.getAngry()){
+                    this.entityImage = leftImageFear;
+                }
+                else{
                     this.entityImage = leftImage;
+                }
                     moveLeft();
                 } else {
                     this.is_a_direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
                 if (gameMap.checkRight_Ghost(getCoords())) {
+                    if (gameMap.getAngry()){
+                    this.entityImage = rightImageFear;
+                }
+                else{
                     this.entityImage = rightImage;
+                }
                     moveRight();
                 } else {
                     this.is_a_direction = false;

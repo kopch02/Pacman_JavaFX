@@ -106,6 +106,12 @@ public class GameMap {
         crossroad.add(new Rectangle(500, 290, 40, 40));
         crossroad.add(new Rectangle(135, 415, 40, 40));
         crossroad.add(new Rectangle(500, 415, 40, 40));
+        crossroad.add(new Rectangle(280, 225, 40, 40));
+        crossroad.add(new Rectangle(350, 225, 40, 40));
+
+        crossroad.add(new Rectangle(317, 275, 40, 40));
+        crossroad.add(new Rectangle(317, 300, 40, 40));
+
 
     }
 
@@ -366,5 +372,9 @@ public class GameMap {
 
     public String getScore() {
         return String.valueOf(score);
+    }
+
+    public boolean getAngry() {
+        return angry;
     }
 }

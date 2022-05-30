@@ -7,6 +7,7 @@ import entity.entity.Entity.DIRECTION;
 import entity.entity.player.Player;
 import entity.entity.enemy.ghosts.RedGhost;
 import entity.entity.enemy.ghosts.PinkGhost;
+import entity.entity.enemy.ghosts.BlueGhost;
 import entity.entity.enemy.Ghost;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,10 +46,17 @@ public class GamePlayController {
     Image leftImagePink = new Image(new File("other/ghosts/pink/left.png").toURI().toString());
     Image rightImagePink = new Image(new File("other/ghosts/pink/right.png").toURI().toString());
 
+    Image upImageBlue = new Image(new File("other/ghosts/blue/up.png").toURI().toString());
+    Image downImageBlue = new Image(new File("other/ghosts/blue/down.png").toURI().toString());
+    Image leftImageBlue = new Image(new File("other/ghosts/blue/left.png").toURI().toString());
+    Image rightImageBlue = new Image(new File("other/ghosts/blue/right.png").toURI().toString());
+
     private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap);
 
     private RedGhost redGhost = new RedGhost(upImageRed, downImageRed, leftImageRed, rightImageRed, gameMap);
     private PinkGhost pinkGhost = new PinkGhost(upImagePink, downImagePink, leftImagePink, rightImagePink, gameMap);
+    private BlueGhost blueGhost = new BlueGhost(upImageBlue, downImageBlue, leftImageBlue, rightImageBlue, gameMap);
+
     static String score;
 
     private void initializeCanvas() {
@@ -64,13 +72,6 @@ public class GamePlayController {
         player.setScale(1.0f);
         player.setMove(true);
 
-        redGhost.setDrawPosition(15, 15);
-        redGhost.setScale(1.0f);
-        redGhost.setMove(true);
-
-        pinkGhost.setDrawPosition(615, 15);
-        pinkGhost.setScale(1.0f);
-        pinkGhost.setMove(true);
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         // GraphicsContext context = gameCanvas.getGraphicsContext2D();// под
@@ -79,6 +80,7 @@ public class GamePlayController {
         renderer.addEntity(player);
         renderer.addEntity(redGhost);
         renderer.addEntity(pinkGhost);
+        renderer.addEntity(blueGhost);
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
@@ -88,9 +90,12 @@ public class GamePlayController {
                 player.update(player.getCurDirection());
                 redGhost.update(player.getCenter());
                 pinkGhost.update(player.getCenter());
+                blueGhost.update(player.getCenter(),redGhost.getCenter());
+                
                 renderer.render();
                 ghostList.add(redGhost);
                 ghostList.add(pinkGhost);
+                ghostList.add(blueGhost);
                 gameMap.eatpoint(player.getSprite(), renderer);
                 scorelLabel.setText(gameMap.getScore());
                 player.setDead(gameMap.checkLose(player.getSprite(), ghostList));
