@@ -26,10 +26,11 @@ public class DBUtil {
 
         }
     }
-    public static void dbDisconnect(){
-        try{
+
+    public static void dbDisconnect() {
+        try {
             conn.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -38,33 +39,34 @@ public class DBUtil {
         Statement stmt = null;
         ResultSet resultSet = null;
         CachedRowSet crs = null;
-        try{
+        try {
             dbConnect();
             System.out.println("Select: = " + query + "\n");
             stmt = conn.createStatement();
             resultSet = stmt.executeQuery(query);
             crs = RowSetProvider.newFactory().createCachedRowSet();
             crs.populate(resultSet);
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }finally{
+        } finally {
             if (resultSet != null) {
                 resultSet.close();
             }
-            if (stmt != null){
+            if (stmt != null) {
                 stmt.close();
             }
             dbDisconnect();
         }
         return crs;
     }
+
     public static void dbExecuteUpdate(String sql) throws SQLException, ClassNotFoundException {
         Statement stmt = null;
         try {
             dbConnect();
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             if (stmt != null) {

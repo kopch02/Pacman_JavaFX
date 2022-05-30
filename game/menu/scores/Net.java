@@ -13,6 +13,7 @@ import server.db.PlayerBD;
 public class Net {
     private ObjectInputStream in;
     private DataOutputStream out;
+
     public Net() {
         try {
             System.out.println("Net init");
@@ -27,13 +28,14 @@ public class Net {
         }
     }
 
-    public ObservableList<PlayerBD> receivePLFromServer() throws ClassNotFoundException, IOException{ // PL - players list
+    public ObservableList<PlayerBD> receivePLFromServer() throws ClassNotFoundException, IOException { // PL - players
+                                                                                                       // list
         try {
             out.writeBoolean(false);
             out.flush();
             ArrayList<PlayerBD> playerList = (ArrayList<PlayerBD>) in.readObject();
             ObservableList<PlayerBD> oPlayerList = FXCollections.observableArrayList(playerList);
-            
+
             return oPlayerList;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

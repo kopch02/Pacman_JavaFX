@@ -71,8 +71,8 @@ public class GameMap {
         nodes.add(new Rectangle(120, 215, 15, 60));// тройка лево верх
         nodes.add(new Rectangle(0, 275, 135, 15));
 
-        nodes.add(new Rectangle(0, 275, 15, 60));//стена лево
-        
+        nodes.add(new Rectangle(0, 275, 15, 60));// стена лево
+
         nodes.add(new Rectangle(0, 330, 135, 60));
         nodes.add(new Rectangle(120, 345, 15, 60));// тройка лево низ
         nodes.add(new Rectangle(0, 400, 135, 15));
@@ -85,7 +85,7 @@ public class GameMap {
         nodes.add(new Rectangle(540, 330, 15, 75));// тройка право низ
         nodes.add(new Rectangle(540, 400, 123, 15));
 
-        nodes.add(new Rectangle(645, 275, 15, 60));//стена право
+        nodes.add(new Rectangle(645, 275, 15, 60));// стена право
 
         nodes.add(new Rectangle(540, 200, 130, 60));
         nodes.add(new Rectangle(540, 215, 15, 75));// тройка право верх
@@ -299,8 +299,8 @@ public class GameMap {
                     renderer.addEntity(new Point(point_image, x, y));
                 }
             }
-         }
-        nodes.remove(nodes.size()-1);
+        }
+        nodes.remove(nodes.size() - 1);
     }
 
     public boolean checkPoint(float x, float y) {
@@ -308,7 +308,7 @@ public class GameMap {
         for (Rectangle sprite : nodes) {
             Shape intersect = Shape.intersect(temp, sprite);
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                // FXMLLoad("game/menu/MenuView.fxml");
+                // FXMLLoad("game/menu/MenuView.fxml");no
                 return false;
             }
         }
