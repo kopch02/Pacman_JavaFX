@@ -15,12 +15,13 @@ public class Entity {
     boolean collisionDetected;
     boolean isMoving = false;
     protected DIRECTION curDir;
-    protected GameMap gamemap = new GameMap();
+    protected GameMap gameMap;
 
     protected Image entityImage;
 
-    public Entity(Image entityImage) {
+    public Entity(Image entityImage, GameMap gameMap) {
         this.entityImage = entityImage;
+        this.gameMap = gameMap;
         this.width = 40;
         this.height = 40;
     }

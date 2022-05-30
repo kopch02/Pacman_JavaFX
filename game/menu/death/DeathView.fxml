@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="mainRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.death.DeathController">
    <children>
-      <Label layoutX="231.0" layoutY="111.0" text="YOU DIED!">
+      <Label layoutX="231.0" layoutY="111.0" text="YOU DIED!" textFill="#f2eeee">
          <font>
             <Font name="Arial Black" size="36.0" />
          </font>

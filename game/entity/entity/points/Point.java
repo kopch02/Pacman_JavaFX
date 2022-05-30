@@ -10,10 +10,8 @@ public class Point extends Entity {
     // Image point_image=new Image(new File("other/point.png").toURI().toString());
     Image pointImage = new Image(new File("other/point.png").toURI().toString());
 
-    GameMap gamemap = new GameMap();
-
-    public Point(Image pointImage, float x, float y) {
-        super(pointImage);
+    public Point(Image pointImage, float x, float y, GameMap gameMap) {
+        super(pointImage, gameMap);
         setDrawPosition(x, y);
         setScale(0.3f);
     }
