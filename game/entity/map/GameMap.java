@@ -9,14 +9,18 @@ import javafx.scene.image.Image;
 import java.io.File;
 import gameplay.Renderer;
 import entity.entity.points.Point;
+import entity.entity.enemy.Ghost;
 
 public class GameMap {
     ArrayList<Rectangle> nodes = new ArrayList<>();
     ArrayList<Rectangle> crossroad = new ArrayList<>();
     ArrayList<Point> pointList = new ArrayList<>();
+    ArrayList<Point> megapointList = new ArrayList<>();
     Image point_image = new Image(new File("other/point.png").toURI().toString());
+    Image megapoint_image = new Image(new File("other/megapoint.png").toURI().toString());
 
-    Integer score=1;
+    boolean angry=false;
+    Integer score=0;
 
     public GameMap() {
 
@@ -273,13 +277,18 @@ public class GameMap {
         return true;
     }
 
-    public boolean checkLose(Rectangle player, ArrayList<Rectangle> enemy_list) {
-        for (Rectangle enemy : enemy_list) {
+    public boolean checkLose(Rectangle player, ArrayList<Ghost> enemy_list) {
+        for (Ghost enemy : enemy_list) {
 
-            Shape intersect = Shape.intersect(player, enemy);
+            Shape intersect = Shape.intersect(player, enemy.getSprite());
 
             if (intersect.getBoundsInLocal().getWidth() != -1) {
+                if (angry){
+                    enemy.setDrawPosition(320, 225);
+                }
+                else{
                 return true;
+                }
             }
         }
         return false;
@@ -298,6 +307,15 @@ public class GameMap {
         for (Point point : pointList) {
             renderer.addEntity(point);
         }
+        megapointList.add(new Point(megapoint_image,135,100));
+        megapointList.add(new Point(megapoint_image,500,100));
+        megapointList.add(new Point(megapoint_image,65,475));
+        megapointList.add(new Point(megapoint_image,570,475));
+
+        for (Point megapoint : megapointList) {
+            megapoint.setScale((float)1);
+            renderer.addEntity(megapoint);
+        }
     }
 
     public boolean checkPoint(float x, float y) {
@@ -305,7 +323,6 @@ public class GameMap {
         for (Rectangle sprite : nodes) {
             Shape intersect = Shape.intersect(temp, sprite);
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                // FXMLLoad("game/menu/MenuView.fxml");no
                 return false;
             }
         }
@@ -313,13 +330,26 @@ public class GameMap {
     }
 
     public boolean eatpoint(Rectangle player,Renderer renderer) {
+        
         for (Point point : pointList) {
             Shape intersect = Shape.intersect(player, point.getSprite());
             if (intersect.getBoundsInLocal().getWidth() != -1) {
-                score++;
+                score+=5;
                 renderer.removeEntity(point);
                 pointList.remove(point);
             }
+        }
+        for (Point megapoint : megapointList) {
+            Shape intersect = Shape.intersect(player, megapoint.getSprite());
+            if (intersect.getBoundsInLocal().getWidth() != -1) {
+                score+=20;
+                renderer.removeEntity(megapoint);
+                megapointList.remove(megapoint);
+                angry=true;
+            }
+        }
+        if (pointList.size()==0 && megapointList.size()==0){
+            create_points(renderer);
         }
         return true;
     }

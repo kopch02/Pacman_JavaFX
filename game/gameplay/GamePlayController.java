@@ -32,7 +32,7 @@ public class GamePlayController {
 
     KeyPolling keys = KeyPolling.getInstance();
 
-    ArrayList<Rectangle> ghostList = new ArrayList<>();
+    ArrayList<Ghost> ghostList = new ArrayList<>();
 
     Image upImageOrange = new Image(new File("other/ghosts/orange/up.png").toURI().toString());
     Image downImageOrange = new Image(new File("other/ghosts/orange/down.png").toURI().toString());
@@ -91,8 +91,8 @@ public class GamePlayController {
                 blueGhost.update(player.getCenter());
                 scorelLabel.setText(String.valueOf(x));
                 renderer.render();
-                ghostList.add(orangeGhost.getSprite());
-                ghostList.add(blueGhost.getSprite());
+                ghostList.add(orangeGhost);
+                ghostList.add(blueGhost);
                 gamemap.eatpoint(player.getSprite(),renderer);
                 scorelLabel.setText(gamemap.getScore());
                 player.setDead(gamemap.checkLose(player.getSprite(), ghostList));
