@@ -295,6 +295,9 @@ public class GameMap {
             }
         }
         nodes.remove(nodes.size() - 1);
+        for (Point point : pointList) {
+            renderer.addEntity(point);
+        }
     }
 
     public boolean checkPoint(float x, float y) {
