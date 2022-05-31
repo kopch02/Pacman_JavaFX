@@ -24,6 +24,8 @@ public class GameMap {
     boolean angry = false;
     long angryTime;
     Integer score = 0;
+    int megaPointsCount = 0;
+    long now;
 
     public GameMap() {
 
@@ -111,7 +113,6 @@ public class GameMap {
 
         crossroad.add(new Rectangle(317, 275, 40, 40));
         crossroad.add(new Rectangle(317, 300, 40, 40));
-
 
     }
 
@@ -354,19 +355,20 @@ public class GameMap {
             Shape intersect = Shape.intersect(player, megaPoint.getSprite());
             if (intersect.getBoundsInLocal().getWidth() != -1) {
                 angryTime = now;
+                megaPointsCount++;
                 score += 5;
                 renderer.removeEntity(megaPoint);
                 itr.remove();
                 angry = true;
-                
+
             }
 
-            
         }
         if (angryTime + 3000 < now) {
             angry = false;
         }
         if (pointList.size() == 0 && megapointList.size() == 0) {
+            megaPointsCount = 0;
             create_points(renderer);
         }
         return true;
