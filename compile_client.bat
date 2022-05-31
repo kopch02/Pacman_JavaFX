@@ -17,7 +17,5 @@ javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d
 
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/Main.java
 
-java --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml  -cp game/classes Main
-
 pause
 

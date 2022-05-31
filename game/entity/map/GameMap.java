@@ -339,6 +339,8 @@ public class GameMap {
     }
 
     public boolean eatpoint(Rectangle player, Renderer renderer) {
+        long now = System.currentTimeMillis();
+
         for (Iterator<Point> itr = pointList.iterator(); itr.hasNext();) {
             Point point = itr.next();
             Shape intersect = Shape.intersect(player, point.getSprite());
@@ -351,7 +353,6 @@ public class GameMap {
         for (Iterator<Point> itr = megapointList.iterator(); itr.hasNext();) {
             Point megaPoint = itr.next();
             Shape intersect = Shape.intersect(player, megaPoint.getSprite());
-            now = System.currentTimeMillis();
             if (intersect.getBoundsInLocal().getWidth() != -1) {
                 angryTime = now;
                 megaPointsCount++;
@@ -362,11 +363,6 @@ public class GameMap {
 
             }
 
-        }
-        if (megaPointsCount % 4 == 0) {
-            megaPointsCount = -1;
-            now = System.currentTimeMillis();
-            angryTime = now;
         }
         if (angryTime + 3000 < now) {
             angry = false;

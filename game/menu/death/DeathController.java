@@ -7,6 +7,7 @@ import gameplay.GamePlayController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import menu.scores.Net;
 
@@ -19,10 +20,14 @@ public class DeathController {
     @FXML
     AnchorPane mainRoot;
 
+    @FXML
+    Label score;
+
     Net net;
 
     @FXML
     public void initialize() {
+        score.setText(GamePlayController.getScore());
         net = new Net();
         net.sendToServer(Player.getName(), GamePlayController.getScore());
     }
