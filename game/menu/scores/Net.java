@@ -13,11 +13,13 @@ import server.db.PlayerBD;
 public class Net {
     private ObjectInputStream in;
     private DataOutputStream out;
+    Socket s;
+
 
     public Net() {
         try {
             System.out.println("Net init");
-            Socket s = new Socket("127.0.0.1", 1111);
+            s = new Socket("127.0.0.1", 1111);
             System.out.println("Local port: " + s.getLocalPort());
             System.out.println("Remote port: " + s.getPort());
 
@@ -25,6 +27,8 @@ public class Net {
             out = new DataOutputStream(s.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            
         }
     }
 

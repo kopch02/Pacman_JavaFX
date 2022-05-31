@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
-import javafx.scene.canvas.GraphicsContext;//под отображение
 import javafx.scene.control.Label;
 import entity.map.GameMap;
 
@@ -74,14 +73,11 @@ public class GamePlayController {
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
-        // GraphicsContext context = gameCanvas.getGraphicsContext2D();// под
-        // отображение
         gameMap.create_points(renderer);
         renderer.addEntity(player);
         renderer.addEntity(redGhost);
         renderer.addEntity(pinkGhost);
         renderer.addEntity(blueGhost);
-
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
             public void tick(float secondsSinceLastFrame) {
@@ -90,8 +86,8 @@ public class GamePlayController {
                 player.update(player.getCurDirection());
                 redGhost.update(player.getCenter());
                 pinkGhost.update(player.getCenter());
-                blueGhost.update(player.getCenter(),redGhost.getCenter());
-                
+                blueGhost.update(player.getCenter(), redGhost.getCenter());
+
                 renderer.render();
                 ghostList.add(redGhost);
                 ghostList.add(pinkGhost);
@@ -103,7 +99,6 @@ public class GamePlayController {
                     stop();
                 }
                 ghostList.clear();
-                // gamemap.create(context);// под отображение
 
             }
         };
