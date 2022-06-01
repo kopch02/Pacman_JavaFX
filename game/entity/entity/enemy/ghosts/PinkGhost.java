@@ -47,7 +47,7 @@ public class PinkGhost extends Ghost {
     }
 
     public void update(Point2D playerCenter) {
-        if (Integer.valueOf(gameMap.getScore())>=100){
+        if (Integer.valueOf(gameMap.getScore()) >= 100) {
             setMove(true);
         }
         ghostCenter = getCenter();
@@ -193,10 +193,9 @@ public class PinkGhost extends Ghost {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
                 if (gameMap.checkUpGhost(getCoords())) {
-                    if (gameMap.getAngry()){
+                    if (gameMap.getAngry()) {
                         this.entityImage = upImageFear;
-                    }
-                    else{
+                    } else {
                         this.entityImage = upImage;
                     }
                     moveUp();
@@ -205,10 +204,9 @@ public class PinkGhost extends Ghost {
                 }
             } else if (this.curDir == DIRECTION.down) {
                 if (gameMap.checkDownGhost(getCoords())) {
-                    if (gameMap.getAngry()){
+                    if (gameMap.getAngry()) {
                         this.entityImage = downImageFear;
-                    }
-                    else{    
+                    } else {
                         this.entityImage = downImage;
                     }
                     moveDown();
@@ -217,24 +215,22 @@ public class PinkGhost extends Ghost {
                 }
             } else if (this.curDir == DIRECTION.left) {
                 if (gameMap.checkLeftGhost(getCoords())) {
-                    if (gameMap.getAngry()){
-                    this.entityImage = leftImageFear;
-                }
-                else{
-                    this.entityImage = leftImage;
-                }
+                    if (gameMap.getAngry()) {
+                        this.entityImage = leftImageFear;
+                    } else {
+                        this.entityImage = leftImage;
+                    }
                     moveLeft();
                 } else {
                     this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
                 if (gameMap.checkRightGhost(getCoords())) {
-                    if (gameMap.getAngry()){
-                    this.entityImage = rightImageFear;
-                }
-                else{
-                    this.entityImage = rightImage;
-                }
+                    if (gameMap.getAngry()) {
+                        this.entityImage = rightImageFear;
+                    } else {
+                        this.entityImage = rightImage;
+                    }
                     moveRight();
                 } else {
                     this.direction = false;
@@ -263,4 +259,7 @@ public class PinkGhost extends Ghost {
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
 
+    public void goSpawn() {
+        setDrawPosition(340, 225);
+    }
 }

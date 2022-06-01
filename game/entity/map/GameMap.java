@@ -22,7 +22,6 @@ public class GameMap {
     Image megapointImage = new Image(new File("other/megapoint.png").toURI().toString());
 
     boolean angry = false;
-    boolean goSpawn = false;
     long angryTime;
     long reSpawnTime;
     Integer score = 0;
@@ -295,19 +294,19 @@ public class GameMap {
             Shape intersect = Shape.intersect(player, enemy.getSprite());
             if (intersect.getBoundsInLocal().getWidth() != -1) {
                 if (angry) {
-                    reSpawnTime = now+ 3000;
-                    enemy.setDrawPosition(1000, 1000); 
-                    goSpawn=true;  
+                    reSpawnTime = now + 3000;
+                    enemy.setDrawPosition(1000, 1000);
+                    enemy.switchGoSpawn();
                 } else {
                     return true;
                 }
             }
-            if ((reSpawnTime  < now)&& goSpawn) {
-                enemy.setDrawPosition(320, 225);  
-                goSpawn=false; 
+            if ((reSpawnTime < now) && enemy.getGoSpawn()) {
+                enemy.goSpawn();
+                enemy.switchGoSpawn();
             }
         }
-        
+
         return false;
     }
 

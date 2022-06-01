@@ -17,7 +17,7 @@ public class Ghost extends Entity {
     Point2D ghostCenter;
     double distance1;
     double distance2;
-
+    boolean goSpawn = false;
 
     public Ghost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage, GameMap gameMap) {
         super(UpImage, gameMap);
@@ -27,8 +27,6 @@ public class Ghost extends Entity {
         leftImage = LeftImage;
         rightImage = RightImage;
     }
-
-    
 
     public void moving(DIRECTION direction) {
         if (this.isMoving()) {
@@ -85,4 +83,14 @@ public class Ghost extends Entity {
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
 
+    public void switchGoSpawn() {
+        this.goSpawn = !this.goSpawn;
+    }
+
+    public boolean getGoSpawn() {
+        return this.goSpawn;
+    }
+
+    public void goSpawn() {
+    }
 }

@@ -6,7 +6,6 @@ import javafx.geometry.Point2D;
 import entity.map.GameMap;
 import java.io.File;
 
-
 public class BlueGhost extends Ghost {
 
     Image upImage;
@@ -48,8 +47,8 @@ public class BlueGhost extends Ghost {
 
     }
 
-    public void update(Point2D playerCenter,Point2D redCenter) {
-        if (Integer.valueOf(gameMap.getScore())>=500){
+    public void update(Point2D playerCenter, Point2D redCenter) {
+        if (Integer.valueOf(gameMap.getScore()) >= 500) {
             setMove(true);
         }
         ghostCenter = redCenter;
@@ -75,9 +74,9 @@ public class BlueGhost extends Ghost {
                             + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
                     this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
                             + Math.pow(((ghostCenter.getY() + 40) - playerCenter.getY() + ycur), 2));
-                            this.distance1*=2;
-                            this.distance2*=2;
-                        if (this.distance1 < this.distance2) {
+                    this.distance1 *= 2;
+                    this.distance2 *= 2;
+                    if (this.distance1 < this.distance2) {
                         if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
                             moveRight();
@@ -105,8 +104,8 @@ public class BlueGhost extends Ghost {
                             + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
                     this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
                             + Math.pow(((ghostCenter.getY() - 40) - playerCenter.getY() + ycur), 2));
-                            this.distance1*=2;
-                            this.distance2*=2;
+                    this.distance1 *= 2;
+                    this.distance2 *= 2;
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
@@ -137,8 +136,8 @@ public class BlueGhost extends Ghost {
                             + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
                     this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
                             + Math.pow(((ghostCenter.getY() + 40) - playerCenter.getY() + ycur), 2));
-                            this.distance1*=2;
-                            this.distance2*=2;
+                    this.distance1 *= 2;
+                    this.distance2 *= 2;
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
@@ -167,8 +166,8 @@ public class BlueGhost extends Ghost {
                             + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
                     this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
                             + Math.pow(((ghostCenter.getY() - 40) - playerCenter.getY() + ycur), 2));
-                            this.distance1*=2;
-                            this.distance2*=2;
+                    this.distance1 *= 2;
+                    this.distance2 *= 2;
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
@@ -203,10 +202,9 @@ public class BlueGhost extends Ghost {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
                 if (gameMap.checkUpGhost(getCoords())) {
-                    if (gameMap.getAngry()){
+                    if (gameMap.getAngry()) {
                         this.entityImage = upImageFear;
-                    }
-                    else{
+                    } else {
                         this.entityImage = upImage;
                     }
                     moveUp();
@@ -215,10 +213,9 @@ public class BlueGhost extends Ghost {
                 }
             } else if (this.curDir == DIRECTION.down) {
                 if (gameMap.checkDownGhost(getCoords())) {
-                    if (gameMap.getAngry()){
+                    if (gameMap.getAngry()) {
                         this.entityImage = downImageFear;
-                    }
-                    else{    
+                    } else {
                         this.entityImage = downImage;
                     }
                     moveDown();
@@ -227,24 +224,22 @@ public class BlueGhost extends Ghost {
                 }
             } else if (this.curDir == DIRECTION.left) {
                 if (gameMap.checkLeftGhost(getCoords())) {
-                    if (gameMap.getAngry()){
-                    this.entityImage = leftImageFear;
-                }
-                else{
-                    this.entityImage = leftImage;
-                }
+                    if (gameMap.getAngry()) {
+                        this.entityImage = leftImageFear;
+                    } else {
+                        this.entityImage = leftImage;
+                    }
                     moveLeft();
                 } else {
                     this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
                 if (gameMap.checkRightGhost(getCoords())) {
-                    if (gameMap.getAngry()){
-                    this.entityImage = rightImageFear;
-                }
-                else{
-                    this.entityImage = rightImage;
-                }
+                    if (gameMap.getAngry()) {
+                        this.entityImage = rightImageFear;
+                    } else {
+                        this.entityImage = rightImage;
+                    }
                     moveRight();
                 } else {
                     this.direction = false;
@@ -273,4 +268,7 @@ public class BlueGhost extends Ghost {
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
 
+    public void goSpawn() {
+        setDrawPosition(300, 225);
+    }
 }
