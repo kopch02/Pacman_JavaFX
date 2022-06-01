@@ -73,7 +73,7 @@ public class GamePlayController {
 
         Renderer renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
-        gameMap.create_points(renderer);
+        gameMap.createPoints(renderer);
         renderer.addEntity(player);
         renderer.addEntity(redGhost);
         renderer.addEntity(pinkGhost);

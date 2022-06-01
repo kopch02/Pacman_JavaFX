@@ -18,8 +18,8 @@ public class GameMap {
     ArrayList<Rectangle> crossroad = new ArrayList<>();
     ArrayList<Point> pointList = new ArrayList<Point>();
     ArrayList<Point> megapointList = new ArrayList<Point>();
-    Image point_image = new Image(new File("other/point.png").toURI().toString());
-    Image megapoint_image = new Image(new File("other/megapoint.png").toURI().toString());
+    Image pointImage = new Image(new File("other/point.png").toURI().toString());
+    Image megapointImage = new Image(new File("other/megapoint.png").toURI().toString());
 
     boolean angry = false;
     long angryTime;
@@ -147,7 +147,7 @@ public class GameMap {
 
     }
 
-    public boolean within_y(ArrayList<Double> coords, Rectangle rect) {
+    public boolean withinY(ArrayList<Double> coords, Rectangle rect) {
         double rectY2 = rect.getY() + rect.getHeight();
         if (((coords.get(1) > rect.getY()) && (coords.get(1) < rectY2)) ||
                 ((coords.get(3) > rect.getY()) && (coords.get(3) < rectY2)) ||
@@ -159,7 +159,7 @@ public class GameMap {
         }
     }
 
-    public boolean within_x(ArrayList<Double> coords, Rectangle rect) {
+    public boolean withinX(ArrayList<Double> coords, Rectangle rect) {
         double rectX2 = rect.getX() + rect.getWidth();
         if (((coords.get(0) > rect.getX()) && (coords.get(0) < rectX2)) ||
                 ((coords.get(2) > rect.getX()) && (coords.get(2) < rectX2)) ||
@@ -173,7 +173,7 @@ public class GameMap {
 
     public boolean checkLeft(ArrayList<Double> coords) {
         for (Rectangle sprite : nodes) {
-            if (within_y(coords, sprite)) {
+            if (withinY(coords, sprite)) {
                 if ((coords.get(0) <= sprite.getX() + sprite.getWidth()) && (coords.get(0) >= sprite.getX())) {
                     return false;
                 }
@@ -184,7 +184,7 @@ public class GameMap {
 
     public boolean checkRight(ArrayList<Double> coords) {
         for (Rectangle sprite : nodes) {
-            if (within_y(coords, sprite)) {
+            if (withinY(coords, sprite)) {
                 if ((coords.get(2) >= sprite.getX()) && (coords.get(2) <= sprite.getX() + sprite.getWidth())) {
                     return false;
                 }
@@ -195,7 +195,7 @@ public class GameMap {
 
     public boolean checkUp(ArrayList<Double> coords) {
         for (Rectangle sprite : nodes) {
-            if (within_x(coords, sprite)) {
+            if (withinX(coords, sprite)) {
                 if ((coords.get(1) <= sprite.getY() + sprite.getHeight()) && (coords.get(1) >= sprite.getY())) {
                     return false;
                 }
@@ -206,7 +206,7 @@ public class GameMap {
 
     public boolean checkDown(ArrayList<Double> coords) {
         for (Rectangle sprite : nodes) {
-            if (within_x(coords, sprite)) {
+            if (withinX(coords, sprite)) {
                 if ((coords.get(3) <= sprite.getY() + sprite.getHeight()) && (coords.get(3) >= sprite.getY())) {
                     return false;
                 }
@@ -215,7 +215,7 @@ public class GameMap {
         return true;
     }
 
-    public boolean checkLeft_Ghost(ArrayList<Double> coords) {
+    public boolean checkLeftGhost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
             if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
                 return false;
@@ -223,7 +223,7 @@ public class GameMap {
 
         }
         for (Rectangle sprite : nodes) {
-            if (within_y(coords, sprite)) {
+            if (withinY(coords, sprite)) {
                 if ((coords.get(0) <= sprite.getX() + sprite.getWidth()) && (coords.get(0) >= sprite.getX())) {
                     return false;
                 }
@@ -233,7 +233,7 @@ public class GameMap {
         return true;
     }
 
-    public boolean checkRight_Ghost(ArrayList<Double> coords) {
+    public boolean checkRightGhost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
             if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
                 return false;
@@ -241,7 +241,7 @@ public class GameMap {
             }
         }
         for (Rectangle sprite : nodes) {
-            if (within_y(coords, sprite)) {
+            if (withinY(coords, sprite)) {
                 if ((coords.get(2) >= sprite.getX()) && (coords.get(2) <= sprite.getX() + sprite.getWidth())) {
                     return false;
                 }
@@ -251,7 +251,7 @@ public class GameMap {
         return true;
     }
 
-    public boolean checkUp_Ghost(ArrayList<Double> coords) {
+    public boolean checkUpGhost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
             if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
                 return false;
@@ -259,7 +259,7 @@ public class GameMap {
 
         }
         for (Rectangle sprite : nodes) {
-            if (within_x(coords, sprite)) {
+            if (withinX(coords, sprite)) {
                 if ((coords.get(1) <= sprite.getY() + sprite.getHeight()) && (coords.get(1) >= sprite.getY())) {
                     return false;
                 }
@@ -269,7 +269,7 @@ public class GameMap {
         return true;
     }
 
-    public boolean checkDown_Ghost(ArrayList<Double> coords) {
+    public boolean checkDownGhost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
             if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
                 return false;
@@ -277,7 +277,7 @@ public class GameMap {
 
         }
         for (Rectangle sprite : nodes) {
-            if (within_x(coords, sprite)) {
+            if (withinX(coords, sprite)) {
                 if ((coords.get(3) <= sprite.getY() + sprite.getHeight()) && (coords.get(3) >= sprite.getY())) {
                     return false;
                 }
@@ -287,8 +287,8 @@ public class GameMap {
         return true;
     }
 
-    public boolean checkLose(Rectangle player, ArrayList<Ghost> enemy_list) {
-        for (Ghost enemy : enemy_list) {
+    public boolean checkLose(Rectangle player, ArrayList<Ghost> enemyList) {
+        for (Ghost enemy : enemyList) {
 
             Shape intersect = Shape.intersect(player, enemy.getSprite());
 
@@ -303,12 +303,12 @@ public class GameMap {
         return false;
     }
 
-    public void create_points(Renderer renderer) {
+    public void createPoints(Renderer renderer) {
         nodes.add(new Rectangle(255, 275, 180, 60));
         for (int x = 31; x < 655; x += 37) {
             for (int y = 25; y < 645; y += 31) {
                 if (checkPoint(x, y)) {
-                    pointList.add(new Point(point_image, x, y, this));
+                    pointList.add(new Point(pointImage, x, y, this));
                 }
             }
         }
@@ -316,10 +316,10 @@ public class GameMap {
         for (Point point : pointList) {
             renderer.addEntity(point);
         }
-        megapointList.add(new Point(megapoint_image, 135, 100, this));
-        megapointList.add(new Point(megapoint_image, 500, 100, this));
-        megapointList.add(new Point(megapoint_image, 65, 475, this));
-        megapointList.add(new Point(megapoint_image, 570, 475, this));
+        megapointList.add(new Point(megapointImage, 135, 100, this));
+        megapointList.add(new Point(megapointImage, 500, 100, this));
+        megapointList.add(new Point(megapointImage, 65, 475, this));
+        megapointList.add(new Point(megapointImage, 570, 475, this));
 
         for (Point megapoint : megapointList) {
             megapoint.setScale((float) 1);
@@ -369,7 +369,7 @@ public class GameMap {
         }
         if (pointList.size() == 0 && megapointList.size() == 0) {
             megaPointsCount = 0;
-            create_points(renderer);
+            createPoints(renderer);
         }
         return true;
     }

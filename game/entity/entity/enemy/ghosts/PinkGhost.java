@@ -19,8 +19,8 @@ public class PinkGhost extends Ghost {
     Image rightImageFear;
 
     float speed = 1;
-    boolean is_a_direction = false;
-    Point2D ghost_center;
+    boolean direction = false;
+    Point2D ghostCenter;
     double distance1;
     double distance2;
     DIRECTION curDir;
@@ -46,12 +46,12 @@ public class PinkGhost extends Ghost {
 
     }
 
-    public void update(Point2D player_center) {
+    public void update(Point2D playerCenter) {
         if (Integer.valueOf(gameMap.getScore())>=100){
             setMove(true);
         }
-        ghost_center = getCenter();
-        if (this.is_a_direction) {
+        ghostCenter = getCenter();
+        if (this.direction) {
             moving(this.curDir);
         } else {
             if (this.curDir == DIRECTION.up) {
@@ -67,12 +67,12 @@ public class PinkGhost extends Ghost {
                 xcur = 160;
                 ycur = 0;
             }
-            if (ghost_center.getX() < player_center.getX()) {
-                if (ghost_center.getY() < player_center.getY()) {// левее и выше
-                    this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() + 40) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY()) - player_center.getY() + ycur), 2));
-                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY() + 40) - player_center.getY() + ycur), 2));
+            if (ghostCenter.getX() < playerCenter.getX()) {
+                if (ghostCenter.getY() < playerCenter.getY()) {// левее и выше
+                    this.distance1 = Math.sqrt(Math.pow(((ghostCenter.getX() + 40) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
+                    this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY() + 40) - playerCenter.getY() + ycur), 2));
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
@@ -97,10 +97,10 @@ public class PinkGhost extends Ghost {
                         }
                     }
                 } else {// левее и ниже
-                    this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() + 40) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY()) - player_center.getY() + ycur), 2));
-                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY() - 40) - player_center.getY() + ycur), 2));
+                    this.distance1 = Math.sqrt(Math.pow(((ghostCenter.getX() + 40) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
+                    this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY() - 40) - playerCenter.getY() + ycur), 2));
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkRight(getCoords())) {
                             this.curDir = DIRECTION.right;
@@ -126,11 +126,11 @@ public class PinkGhost extends Ghost {
                     }
                 }
             } else {
-                if (ghost_center.getY() < player_center.getY()) {// гост правее и выше
-                    this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() - 40) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY()) - player_center.getY() + ycur), 2));
-                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY() + 40) - player_center.getY() + ycur), 2));
+                if (ghostCenter.getY() < playerCenter.getY()) {// гост правее и выше
+                    this.distance1 = Math.sqrt(Math.pow(((ghostCenter.getX() - 40) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
+                    this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY() + 40) - playerCenter.getY() + ycur), 2));
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
@@ -155,10 +155,10 @@ public class PinkGhost extends Ghost {
                         }
                     }
                 } else {// гост правее и ниже
-                    this.distance1 = Math.sqrt(Math.pow(((ghost_center.getX() - 40) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY()) - player_center.getY() + ycur), 2));
-                    this.distance2 = Math.sqrt(Math.pow(((ghost_center.getX()) - player_center.getX() + xcur), 2)
-                            + Math.pow(((ghost_center.getY() - 40) - player_center.getY() + ycur), 2));
+                    this.distance1 = Math.sqrt(Math.pow(((ghostCenter.getX() - 40) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY()) - playerCenter.getY() + ycur), 2));
+                    this.distance2 = Math.sqrt(Math.pow(((ghostCenter.getX()) - playerCenter.getX() + xcur), 2)
+                            + Math.pow(((ghostCenter.getY() - 40) - playerCenter.getY() + ycur), 2));
                     if (this.distance1 < this.distance2) {
                         if (gameMap.checkLeft(getCoords())) {
                             this.curDir = DIRECTION.left;
@@ -184,7 +184,7 @@ public class PinkGhost extends Ghost {
                     }
                 }
             }
-            this.is_a_direction = true;
+            this.direction = true;
             moving(this.curDir);
         }
     }
@@ -192,7 +192,7 @@ public class PinkGhost extends Ghost {
     public void moving(DIRECTION direction) {
         if (this.isMoving()) {
             if (this.curDir == DIRECTION.up) {
-                if (gameMap.checkUp_Ghost(getCoords())) {
+                if (gameMap.checkUpGhost(getCoords())) {
                     if (gameMap.getAngry()){
                         this.entityImage = upImageFear;
                     }
@@ -201,10 +201,10 @@ public class PinkGhost extends Ghost {
                     }
                     moveUp();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.down) {
-                if (gameMap.checkDown_Ghost(getCoords())) {
+                if (gameMap.checkDownGhost(getCoords())) {
                     if (gameMap.getAngry()){
                         this.entityImage = downImageFear;
                     }
@@ -213,10 +213,10 @@ public class PinkGhost extends Ghost {
                     }
                     moveDown();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.left) {
-                if (gameMap.checkLeft_Ghost(getCoords())) {
+                if (gameMap.checkLeftGhost(getCoords())) {
                     if (gameMap.getAngry()){
                     this.entityImage = leftImageFear;
                 }
@@ -225,10 +225,10 @@ public class PinkGhost extends Ghost {
                 }
                     moveLeft();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
-                if (gameMap.checkRight_Ghost(getCoords())) {
+                if (gameMap.checkRightGhost(getCoords())) {
                     if (gameMap.getAngry()){
                     this.entityImage = rightImageFear;
                 }
@@ -237,7 +237,7 @@ public class PinkGhost extends Ghost {
                 }
                     moveRight();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             }
         }

@@ -36,12 +36,12 @@ public class Entity {
 
     public Rectangle getSprite() {
         Point2D pos = getDrawPosition();
-        Rectangle entity_sprite = new Rectangle();
-        entity_sprite.setWidth(getWidth());
-        entity_sprite.setHeight(getHeight());
-        entity_sprite.setLayoutX(pos.getX());
-        entity_sprite.setLayoutY(pos.getY());
-        return entity_sprite;
+        Rectangle entitySprite = new Rectangle();
+        entitySprite.setWidth(getWidth());
+        entitySprite.setHeight(getHeight());
+        entitySprite.setLayoutX(pos.getX());
+        entitySprite.setLayoutY(pos.getY());
+        return entitySprite;
     }
 
     public Point2D getDrawPosition() {

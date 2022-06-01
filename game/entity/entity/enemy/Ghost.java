@@ -13,8 +13,8 @@ public class Ghost extends Entity {
     Image rightImage;
     DIRECTION curDir;
     float speed = 1;
-    boolean is_a_direction = false;
-    Point2D ghost_center;
+    boolean direction = false;
+    Point2D ghostCenter;
     double distance1;
     double distance2;
 
@@ -34,32 +34,32 @@ public class Ghost extends Entity {
         if (this.isMoving()) {
             System.out.println("moving");
             if (this.curDir == DIRECTION.up) {
-                if (gameMap.checkUp_Ghost(getCoords())) {
+                if (gameMap.checkUpGhost(getCoords())) {
                     this.entityImage = upImage;
                     moveUp();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.down) {
-                if (gameMap.checkDown_Ghost(getCoords())) {
+                if (gameMap.checkDownGhost(getCoords())) {
                     this.entityImage = downImage;
                     moveDown();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.left) {
-                if (gameMap.checkLeft_Ghost(getCoords())) {
+                if (gameMap.checkLeftGhost(getCoords())) {
                     this.entityImage = leftImage;
                     moveLeft();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             } else if (this.curDir == DIRECTION.right) {
-                if (gameMap.checkRight_Ghost(getCoords())) {
+                if (gameMap.checkRightGhost(getCoords())) {
                     this.entityImage = rightImage;
                     moveRight();
                 } else {
-                    this.is_a_direction = false;
+                    this.direction = false;
                 }
             }
         }
