@@ -22,7 +22,9 @@ public class GameMap {
     Image megapointImage = new Image(new File("other/megapoint.png").toURI().toString());
 
     boolean angry = false;
+    boolean goSpawn = false;
     long angryTime;
+    long reSpawnTime;
     Integer score = 0;
     int megaPointsCount = 0;
     long now;
@@ -288,18 +290,24 @@ public class GameMap {
     }
 
     public boolean checkLose(Rectangle player, ArrayList<Ghost> enemyList) {
+        long now = System.currentTimeMillis();
         for (Ghost enemy : enemyList) {
-
             Shape intersect = Shape.intersect(player, enemy.getSprite());
-
             if (intersect.getBoundsInLocal().getWidth() != -1) {
                 if (angry) {
-                    enemy.setDrawPosition(320, 225);
+                    reSpawnTime = now+ 3000;
+                    enemy.setDrawPosition(1000, 1000); 
+                    goSpawn=true;  
                 } else {
                     return true;
                 }
             }
+            if ((reSpawnTime  < now)&& goSpawn) {
+                enemy.setDrawPosition(320, 225);  
+                goSpawn=false; 
+            }
         }
+        
         return false;
     }
 
