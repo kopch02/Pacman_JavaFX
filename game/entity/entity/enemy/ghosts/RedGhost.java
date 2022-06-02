@@ -25,13 +25,13 @@ public class RedGhost extends Ghost {
     double distance2;
     DIRECTION curDir;
 
-    public RedGhost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage, GameMap gameMap) {
-        super(UpImage, DownImage, LeftImage, RightImage, gameMap);
+    public RedGhost(Image UpImage, GameMap gameMap) {
+        super(UpImage, gameMap);
         this.curDir = DIRECTION.down;
         upImage = super.getImage();
-        downImage = DownImage;
-        leftImage = LeftImage;
-        rightImage = RightImage;
+        downImage = new Image(new File("other/ghosts/red/down.png").toURI().toString());
+        leftImage = new Image(new File("other/ghosts/red/left.png").toURI().toString());
+        rightImage = new Image(new File("other/ghosts/red/right.png").toURI().toString());
 
         upImageFear = new Image(new File("other/ghosts/red/upFear.png").toURI().toString());
         downImageFear = new Image(new File("other/ghosts/red/downFear.png").toURI().toString());
