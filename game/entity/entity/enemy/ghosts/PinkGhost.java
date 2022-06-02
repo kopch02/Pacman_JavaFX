@@ -27,13 +27,13 @@ public class PinkGhost extends Ghost {
     Integer xcur;
     Integer ycur;
 
-    public PinkGhost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage, GameMap gameMap) {
-        super(UpImage, DownImage, LeftImage, RightImage, gameMap);
+    public PinkGhost(Image UpImage, GameMap gameMap) {
+        super(UpImage, gameMap);
         this.curDir = DIRECTION.down;
         upImage = super.getImage();
-        downImage = DownImage;
-        leftImage = LeftImage;
-        rightImage = RightImage;
+        downImage = new Image(new File("other/ghosts/pink/down.png").toURI().toString());
+        leftImage = new Image(new File("other/ghosts/pink/left.png").toURI().toString());
+        rightImage = new Image(new File("other/ghosts/pink/right.png").toURI().toString());
 
         upImageFear = new Image(new File("other/ghosts/pink/upFear.png").toURI().toString());
         downImageFear = new Image(new File("other/ghosts/pink/downFear.png").toURI().toString());

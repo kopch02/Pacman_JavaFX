@@ -38,7 +38,6 @@ public class ScoresController {
     void initialize() {
         playersNamesCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPlayerName()));
         playersScoresCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPlayerScore()));
-        net = new Net();
 
         try {
             refresh();
@@ -75,6 +74,7 @@ public class ScoresController {
         @Override
         public void run() {
             try {
+                net = new Net();
                 ObservableList<PlayerBD> playersData = net.receivePLFromServer();
                 populatePlayers(playersData);
             } catch (ClassNotFoundException e) {

@@ -28,13 +28,13 @@ public class BlueGhost extends Ghost {
     Integer xcur;
     Integer ycur;
 
-    public BlueGhost(Image UpImage, Image DownImage, Image LeftImage, Image RightImage, GameMap gameMap) {
-        super(UpImage, DownImage, LeftImage, RightImage, gameMap);
+    public BlueGhost(Image UpImage, GameMap gameMap) {
+        super(UpImage, gameMap);
         this.curDir = DIRECTION.down;
         upImage = super.getImage();
-        downImage = DownImage;
-        leftImage = LeftImage;
-        rightImage = RightImage;
+        downImage = new Image(new File("other/ghosts/blue/down.png").toURI().toString());
+        leftImage = new Image(new File("other/ghosts/blue/left.png").toURI().toString());
+        rightImage = new Image(new File("other/ghosts/blue/right.png").toURI().toString());
 
         upImageFear = new Image(new File("other/ghosts/Blue/upFear.png").toURI().toString());
         downImageFear = new Image(new File("other/ghosts/Blue/downFear.png").toURI().toString());

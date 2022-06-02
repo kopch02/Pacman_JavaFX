@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import entity.entity.player.Player;
 import gameplay.GamePlayController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -28,8 +29,13 @@ public class DeathController {
     @FXML
     public void initialize() {
         score.setText(GamePlayController.getScore());
-        net = new Net();
-        net.sendToServer(Player.getName(), GamePlayController.getScore());
+        Platform.runLater(new Runnable() {
+            public void run() {
+                net = new Net();
+                net.sendToServer(Player.getName(), GamePlayController.getScore());
+            }
+        });
+
     }
 
     @FXML

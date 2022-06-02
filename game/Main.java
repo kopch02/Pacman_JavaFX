@@ -20,6 +20,7 @@ public class Main extends Application{
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML(), 670, 660);
         stage.setScene(scene);
+        stage.setTitle("Pacman_JavaFX");
         stage.show();
         stage.setResizable(false);
         stage.centerOnScreen();

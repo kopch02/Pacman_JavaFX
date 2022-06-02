@@ -9,6 +9,7 @@ import entity.entity.enemy.ghosts.RedGhost;
 import entity.entity.enemy.ghosts.PinkGhost;
 import entity.entity.enemy.ghosts.BlueGhost;
 import entity.entity.enemy.Ghost;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
@@ -28,6 +29,8 @@ public class GamePlayController {
     @FXML
     public Canvas gameCanvas;
 
+    Renderer renderer;
+
     @FXML
     Label scorelLabel;
 
@@ -36,25 +39,16 @@ public class GamePlayController {
     ArrayList<Ghost> ghostList = new ArrayList<>();
 
     Image upImageRed = new Image(new File("other/ghosts/red/up.png").toURI().toString());
-    Image downImageRed = new Image(new File("other/ghosts/red/down.png").toURI().toString());
-    Image leftImageRed = new Image(new File("other/ghosts/red/left.png").toURI().toString());
-    Image rightImageRed = new Image(new File("other/ghosts/red/right.png").toURI().toString());
 
     Image upImagePink = new Image(new File("other/ghosts/pink/up.png").toURI().toString());
-    Image downImagePink = new Image(new File("other/ghosts/pink/down.png").toURI().toString());
-    Image leftImagePink = new Image(new File("other/ghosts/pink/left.png").toURI().toString());
-    Image rightImagePink = new Image(new File("other/ghosts/pink/right.png").toURI().toString());
 
     Image upImageBlue = new Image(new File("other/ghosts/blue/up.png").toURI().toString());
-    Image downImageBlue = new Image(new File("other/ghosts/blue/down.png").toURI().toString());
-    Image leftImageBlue = new Image(new File("other/ghosts/blue/left.png").toURI().toString());
-    Image rightImageBlue = new Image(new File("other/ghosts/blue/right.png").toURI().toString());
 
     private Player player = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap);
 
-    private RedGhost redGhost = new RedGhost(upImageRed, downImageRed, leftImageRed, rightImageRed, gameMap);
-    private PinkGhost pinkGhost = new PinkGhost(upImagePink, downImagePink, leftImagePink, rightImagePink, gameMap);
-    private BlueGhost blueGhost = new BlueGhost(upImageBlue, downImageBlue, leftImageBlue, rightImageBlue, gameMap);
+    private RedGhost redGhost = new RedGhost(upImageRed, gameMap);
+    private PinkGhost pinkGhost = new PinkGhost(upImagePink, gameMap);
+    private BlueGhost blueGhost = new BlueGhost(upImageBlue, gameMap);
 
     static String score;
 
@@ -71,38 +65,15 @@ public class GamePlayController {
         player.setScale(1.0f);
         player.setMove(true);
 
-        Renderer renderer = new Renderer(this.gameCanvas);
+        renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         gameMap.createPoints(renderer);
         renderer.addEntity(player);
         renderer.addEntity(redGhost);
         renderer.addEntity(pinkGhost);
         renderer.addEntity(blueGhost);
-        GameLoopTimer timer = new GameLoopTimer() {
-            @Override
-            public void tick(float secondsSinceLastFrame) {
-                renderer.prepare();
-                updatePlayerMovement();
-                player.update(player.getCurDirection());
-                redGhost.update(player.getCenter());
-                pinkGhost.update(player.getCenter());
-                blueGhost.update(player.getCenter(), redGhost.getCenter());
+        Platform.runLater(new TimerThread());
 
-                renderer.render();
-                ghostList.add(redGhost);
-                ghostList.add(pinkGhost);
-                ghostList.add(blueGhost);
-                gameMap.eatpoint(player.getSprite(), renderer);
-                scorelLabel.setText(gameMap.getScore());
-                player.setDead(gameMap.checkLose(player.getSprite(), ghostList));
-                if (isDying()) {
-                    stop();
-                }
-                ghostList.clear();
-
-            }
-        };
-        timer.start();
     }
 
     private void updatePlayerMovement() {
@@ -137,4 +108,32 @@ public class GamePlayController {
         return score;
     }
 
+    class TimerThread extends Thread {
+        public void run() {
+            GameLoopTimer timer = new GameLoopTimer() {
+                @Override
+                public void tick(float secondsSinceLastFrame) {
+                    renderer.prepare();
+                    updatePlayerMovement();
+                    player.update(player.getCurDirection());
+                    redGhost.update(player.getCenter());
+                    pinkGhost.update(player.getCenter());
+                    blueGhost.update(player.getCenter(), redGhost.getCenter());
+
+                    renderer.render();
+                    ghostList.add(redGhost);
+                    ghostList.add(pinkGhost);
+                    ghostList.add(blueGhost);
+                    gameMap.eatpoint(player.getSprite(), renderer);
+                    scorelLabel.setText(gameMap.getScore());
+                    player.setDead(gameMap.checkLose(player.getSprite(), ghostList));
+                    if (isDying()) {
+                        stop();
+                    }
+                    ghostList.clear();
+                }
+            };
+            timer.start();
+        }
+    }
 }
