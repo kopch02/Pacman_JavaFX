@@ -18,7 +18,6 @@ public class RedGhost extends Ghost {
     Image leftImageFear;
     Image rightImageFear;
 
-    float speed = 1;
     boolean direction = false;
     Point2D ghostCenter;
     double distance1;

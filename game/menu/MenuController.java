@@ -3,10 +3,12 @@ package menu;
 import java.io.IOException;
 
 import entity.entity.player.Player;
+import gameplay.GamePlayController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -17,31 +19,66 @@ public class MenuController {
     Button scoresButton;
 
     @FXML
-    TextField playerName;
-
-    @FXML
     AnchorPane mainRoot;
 
     @FXML
     TextField playerNameField;
 
+    // multi
+    @FXML
+    TextField ipField;
+
+    @FXML
+    Button okButton;
+    @FXML
+    Button startMultiButton;
+
+    @FXML
+    Label ipLabel;
+
     @FXML
     public void letsGo(ActionEvent actionEvent) {
-        FXMLLoad("../gameplay/GamePlayView.fxml");
+        FXMLLoad("../gameplay/GamePlayView.fxml", 1);
         Player.setName(playerNameField.getText());
+
+    }
+
+    @FXML
+    public void initilMulti(ActionEvent actionEvent) {
+        ipLabel.setVisible(true);
+        ipField.setVisible(true);
+        okButton.setVisible(true);
+    }
+
+    @FXML
+    public void letsGoMult(ActionEvent actionEvent) {
+        FXMLLoad("../gameplay/GamePlayView.fxml", 2);
+        Player.setName(playerNameField.getText());
+
     }
 
     @FXML
     public void seeScores(ActionEvent actionEvent) {
-        FXMLLoad("scores/ScoresView.fxml");
+        FXMLLoad("scores/ScoresView.fxml", 3);
     }
 
-    private void FXMLLoad(String path) {
+    private void FXMLLoad(String path, int actionCode) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
         AnchorPane pane;
         try {
             pane = fxmlLoader.load();
             mainRoot.getChildren().setAll(pane);
+            GamePlayController gamePlayController = (GamePlayController) fxmlLoader.getController();
+            if (actionCode == 1) {
+                gamePlayController.initSingle();
+                gamePlayController.setIp(ipField.getText());
+            } else if (actionCode == 2) {
+                gamePlayController.setIp(ipField.getText());
+                gamePlayController.initMulti();
+                System.out.println(ipField.getText());
+            } else {
+                
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

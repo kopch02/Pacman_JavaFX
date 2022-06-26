@@ -12,6 +12,7 @@ import java.io.File;
 import gameplay.Renderer;
 import entity.entity.points.Point;
 import entity.entity.enemy.Ghost;
+import entity.entity.player.Player;
 
 public class GameMap {
     ArrayList<Rectangle> nodes = new ArrayList<>();
@@ -290,6 +291,7 @@ public class GameMap {
 
     public boolean checkLose(Rectangle player, ArrayList<Ghost> enemyList) {
         long now = System.currentTimeMillis();
+
         for (Ghost enemy : enemyList) {
             Shape intersect = Shape.intersect(player, enemy.getSprite());
             if (intersect.getBoundsInLocal().getWidth() != -1) {
@@ -305,6 +307,27 @@ public class GameMap {
                 enemy.goSpawn();
                 enemy.switchGoSpawn();
             }
+        }
+
+        return false;
+    }
+
+    public boolean checkLoseMulti(Player player, Player enemy) {
+        long now = System.currentTimeMillis();
+
+        Shape intersect = Shape.intersect(player.getSprite(), enemy.getSprite());
+        if (intersect.getBoundsInLocal().getWidth() != -1) {
+            if (angry) {
+                reSpawnTime = now + 3000;
+                enemy.setDrawPosition(1000, 1000);
+                enemy.switchGoSpawn();
+            } else {
+                return true;
+            }
+        }
+        if ((reSpawnTime < now) && enemy.getGoSpawn()) {
+            enemy.goSpawn();
+            enemy.switchGoSpawn();
         }
 
         return false;

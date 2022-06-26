@@ -13,17 +13,42 @@ public class Player extends Entity {
     Image downImage;
     Image leftImage;
     Image rightImage;
-    float speed = 1;
+    float speed = 2.5f;
     boolean Dead = false;
+    boolean isGhost;
+    boolean goSpawn = false;
     static String name;
 
-    public Player(Image entityImage, GameMap gameMap) {
+    public Player(Image entityImage, GameMap gameMap, boolean isGhost) {
         super(entityImage, gameMap);
         upImage = super.getImage();
+        this.isGhost = isGhost;
+        if (isGhost) {
+            downImage = new Image(new File("other/ghosts/red/down.png").toURI().toString());
+            leftImage = new Image(new File("other/ghosts/red/left.png").toURI().toString());
+            rightImage = new Image(new File("other/ghosts/red/right.png").toURI().toString());
+        } else {
+            downImage = new Image(new File("other/down.gif").toURI().toString());
+            leftImage = new Image(new File("other/left.gif").toURI().toString());
+            rightImage = new Image(new File("other/right.gif").toURI().toString());
+        }
 
-        downImage = new Image(new File("other/down.gif").toURI().toString());
-        leftImage = new Image(new File("other/left.gif").toURI().toString());
-        rightImage = new Image(new File("other/right.gif").toURI().toString());
+    }
+
+    public boolean getIsGhost() {
+        return this.isGhost;
+    }
+
+    public void goSpawn() {
+        setDrawPosition(320, 225);
+    }
+
+    public void switchGoSpawn() {
+        this.goSpawn = !this.goSpawn;
+    }
+
+    public boolean getGoSpawn() {
+        return this.goSpawn;
     }
 
     public static void setName(String name) {

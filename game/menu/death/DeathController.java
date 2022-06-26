@@ -26,15 +26,23 @@ public class DeathController {
 
     Net net;
 
+    String ip;
+
+    public void setIP(String ip) {
+        this.ip = ip;
+    }
+
     @FXML
     public void initialize() {
+        /* 
         score.setText(GamePlayController.getScore());
         Platform.runLater(new Runnable() {
             public void run() {
-                net = new Net();
+                net = new Net(ip);
                 net.sendToServer(Player.getName(), GamePlayController.getScore());
             }
         });
+        */
 
     }
 
