@@ -12,7 +12,7 @@ public class Ghost extends Entity {
     Image leftImage;
     Image rightImage;
     DIRECTION curDir;
-    float speed = 1;
+    protected float speed = 2.5f;
     boolean direction = false;
     Point2D ghostCenter;
     double distance1;

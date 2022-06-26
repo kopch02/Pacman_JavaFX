@@ -34,6 +34,12 @@ public class ScoresController {
 
     private Net net;
 
+    String ip;
+
+    public void setIP(String ip) {
+        this.ip = ip;
+    }
+
     @FXML
     void initialize() {
         playersNamesCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPlayerName()));
@@ -66,15 +72,19 @@ public class ScoresController {
     }
 
     public void refresh() throws ClassNotFoundException, IOException {
-        Platform.runLater(new MyThread());
+        Platform.runLater(new MyThread(ip));
     }
 
     class MyThread extends Thread {
+        String ip;
+        public MyThread(String ip) {
+            this.ip = ip;
+        }
 
         @Override
         public void run() {
             try {
-                net = new Net();
+                //net = new Net(this.ip);
                 ObservableList<PlayerBD> playersData = net.receivePLFromServer();
                 populatePlayers(playersData);
             } catch (ClassNotFoundException e) {
