@@ -4,13 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import entity.entity.Entity.DIRECTION;
 import gameplay.GamePlayController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import server.db.PlayerBD;
 
 public class Net {
     private ObjectInputStream in;
@@ -29,50 +25,22 @@ public class Net {
 
             out = new ObjectOutputStream(s.getOutputStream());
             in = new ObjectInputStream(s.getInputStream());
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            /*
-             * try {
-             * if (out != null) {
-             * out.close();
-             * }
-             * if (in != null) {
-             * in.close();
-             * }
-             * } catch (IOException e) {
-             * 
-             * }
-             */
+
         }
     }
 
-    public ObservableList<PlayerBD> receivePLFromServer() throws ClassNotFoundException, IOException { // PL - players
-                                                                                                       // list
-        try {
-            out.writeBoolean(false);
-            out.flush();
-            ArrayList<PlayerBD> playerList = (ArrayList<PlayerBD>) in.readObject();
-            ObservableList<PlayerBD> oPlayerList = FXCollections.observableArrayList(playerList);
-
-            return oPlayerList;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
+    public void closeCon() {
+        try{
+        if (this.in != null && this.out != null) {
+            in.close();
+            out.close();
         }
-    }
-
-    public void sendToServer(String name, String score) {
-        try {
-            out.writeBoolean(true);
-            out.writeUTF(name);
-            out.writeUTF(score);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch(Exception e){
+            
         }
     }
 

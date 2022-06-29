@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import menu.scores.Net;
+import menu.scores.NetDB;
 
 public class DeathController {
     @FXML
@@ -24,7 +24,13 @@ public class DeathController {
     @FXML
     Label score;
 
-    Net net;
+    @FXML
+    Label titleLabel;
+
+    @FXML
+    Label yourScoreLabel;
+
+    NetDB netDB;
 
     String ip;
 
@@ -34,15 +40,28 @@ public class DeathController {
 
     @FXML
     public void initialize() {
-        /* 
+
+    }
+
+    public void initSingle() {
         score.setText(GamePlayController.getScore());
         Platform.runLater(new Runnable() {
             public void run() {
-                net = new Net(ip);
-                net.sendToServer(Player.getName(), GamePlayController.getScore());
+                netDB = new NetDB(ip);
+                netDB.sendToServer(Player.getName(), GamePlayController.getScore());
             }
         });
-        */
+    }
+
+    public void initMulti() {
+
+        titleLabel.setText("YOU WON!");
+        score.setVisible(false);
+        score.setDisable(true);
+        yourScoreLabel.setVisible(false);
+        yourScoreLabel.setDisable(true);
+        seeScoresButton.setVisible(false);
+        seeScoresButton.setDisable(true);
 
     }
 

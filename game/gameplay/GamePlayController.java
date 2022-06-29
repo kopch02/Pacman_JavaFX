@@ -13,12 +13,15 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import menu.death.DeathController;
 import menu.scores.Net;
 
 import java.util.ArrayList;
+
 import javafx.scene.control.Label;
 import entity.map.GameMap;
 
@@ -48,6 +51,7 @@ public class GamePlayController {
 
     private Player player1;
     private Player player2;
+    GraphicsContext context;
 
     private RedGhost redGhost = new RedGhost(upImageRed, gameMap);
     private PinkGhost pinkGhost = new PinkGhost(upImagePink, gameMap);
@@ -58,6 +62,7 @@ public class GamePlayController {
     String loc2 = "127.0.0.1";
     String ip = new String();
     public static String ipS;
+    boolean multi;
 
     private void initializeCanvas() {
         gameCanvas.widthProperty().bind(mainRoot.widthProperty());
@@ -70,9 +75,12 @@ public class GamePlayController {
         renderer = new Renderer(this.gameCanvas);
         renderer.setBackground(new Image(new File("other/map2.png").toURI().toString()));
         gameMap.createPoints(renderer);
+        
     }
 
     public void initSingle() {
+        context = gameCanvas.getGraphicsContext2D();
+        multi = false;
         player1 = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap, false);
         player1.setDrawPosition(315, 350);
         player1.setScale(1.0f);
@@ -95,23 +103,29 @@ public class GamePlayController {
 
     public void initMulti() {
         System.out.println(ip);
+        multi = true;
         if ((ip.equalsIgnoreCase(loc)) || ip.equalsIgnoreCase(loc2)) {
             System.out.println("EQUALS");
             player1 = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap, false);
             player2 = new Player(new Image(new File("other/ghosts/red/up.png").toURI().toString()), gameMap, true);
+            player1.setDrawPosition(320, 350);
+            player1.setDirection(DIRECTION.right);
+            player2.setDrawPosition(320, 225);
+            player2.setDirection(DIRECTION.left);
         } else {
             System.out.println("NNOOOOOOOT EQUALS");
             player1 = new Player(new Image(new File("other/ghosts/red/up.png").toURI().toString()), gameMap, true);
             player2 = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap, false);
+            player1.setDrawPosition(320, 225);
+            player1.setDirection(DIRECTION.left);
+            player2.setDrawPosition(320, 350);
+            player2.setDirection(DIRECTION.right);
         }
 
-        player1.setDrawPosition(280, 350);
         player1.setScale(1.0f);
-        player1.setDirection(DIRECTION.right);
         player1.setMove(true);
-        player2.setDrawPosition(325, 350);
+
         player2.setScale(1.0f);
-        player1.setDirection(DIRECTION.left);
         player2.setMove(true);
         renderer.addEntity(player1);
         renderer.addEntity(player2);
@@ -131,19 +145,51 @@ public class GamePlayController {
     }
 
     private boolean isDying() {
-        if (this.player1.isDead()) {
-            score = scorelLabel.getText();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
-            AnchorPane pane;
-            try {
-                pane = fxmlLoader.load();
-                mainRoot.getChildren().setAll(pane);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (multi) {
+            if (this.player1.isDead() || this.player2.isDead()) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
+                AnchorPane pane;
+                try {
+                    pane = fxmlLoader.load();
+                    mainRoot.getChildren().setAll(pane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (!player1.getIsGhost()) {
+                    score = scorelLabel.getText();
+                    DeathController deathController = (DeathController) fxmlLoader.getController();
+                    deathController.initSingle();
+                } else {
+                    DeathController deathController = (DeathController) fxmlLoader.getController();
+                    deathController.initMulti();
+                }
+                return true;
+
             }
-            return true;
+            return false;
+        } else {
+            if (this.player1.isDead()) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
+                AnchorPane pane;
+                try {
+                    pane = fxmlLoader.load();
+                    mainRoot.getChildren().setAll(pane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (!player1.getIsGhost()) {
+                    score = scorelLabel.getText();
+                    DeathController deathController = (DeathController) fxmlLoader.getController();
+                    deathController.initSingle();
+                } else {
+                    DeathController deathController = (DeathController) fxmlLoader.getController();
+                    deathController.initMulti();
+                }
+                return true;
+
+            }
+            return false;
         }
-        return false;
     }
 
     public static String getScore() {
@@ -179,12 +225,14 @@ public class GamePlayController {
                     renderer.render();
                     if (!player1.getIsGhost()) {
                         gameMap.eatpoint(player1.getSprite(), renderer);
+                        player1.setDead(gameMap.checkLoseMulti(player1, player2));
                     } else {
                         gameMap.eatpoint(player2.getSprite(), renderer);
+                        player2.setDead(gameMap.checkLoseMulti(player1, player2));
                     }
                     scorelLabel.setText(gameMap.getScore());
-                    // player1.setDead(gameMap.checkLoseMulti(player1, player2));
                     if (isDying()) {
+                        net.closeCon();
                         stop();
                     }
 
@@ -202,6 +250,7 @@ public class GamePlayController {
                     renderer.prepare();
                     updatePlayerMovement();
                     player1.update(player1.getCurDirection());
+                    
 
                     redGhost.update(player1.getCenter());
                     pinkGhost.update(player1.getCenter());
@@ -218,6 +267,7 @@ public class GamePlayController {
                         stop();
                     }
                     ghostList.clear();
+                    gameMap.create(context);
 
                 }
             };

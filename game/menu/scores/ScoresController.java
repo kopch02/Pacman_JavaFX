@@ -32,12 +32,16 @@ public class ScoresController {
     @FXML
     TableColumn<PlayerBD, String> playersScoresCol;
 
-    private Net net;
+    private NetDB netDB;
 
     String ip;
+    static String ipS;
 
     public void setIP(String ip) {
         this.ip = ip;
+        ipS = this.ip;
+        System.out.println("SCC SET IP:" + this.ip);
+        System.out.println("SCC STAT IP:" + ipS);
     }
 
     @FXML
@@ -84,8 +88,8 @@ public class ScoresController {
         @Override
         public void run() {
             try {
-                //net = new Net(this.ip);
-                ObservableList<PlayerBD> playersData = net.receivePLFromServer();
+                netDB = new NetDB(this.ip);
+                ObservableList<PlayerBD> playersData = netDB.receivePLFromServer();
                 populatePlayers(playersData);
             } catch (ClassNotFoundException e) {
                 System.out.println(e.getMessage());
