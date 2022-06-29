@@ -7,6 +7,7 @@ javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/entity/map/GameMap.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/menu/scores/ScoresController.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/menu/scores/Net.java
+javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/menu/scores/NetDB.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/entity/entity/enemy/Ghost.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/entity/entity/points/Point.java
 javac --module-path game\javafx\lib --add-modules=javafx.controls,javafx.fxml -d game/classes -sourcepath game game/menu/death/DeathController.java

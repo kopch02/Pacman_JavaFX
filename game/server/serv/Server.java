@@ -10,8 +10,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import entity.entity.Entity.DIRECTION;
-import server.db.PlayerBD;
-import server.db.PlayerDAO;
 
 public class Server {
 
@@ -23,15 +21,17 @@ public class Server {
 
         try {
             ss = new ServerSocket(1111);
-            while (ez.size() < 2) {
+            while (true) {
+                while(ez.size() < 2){
                 System.out.println("Waiting connection...");
                 System.out.println(ez.size());
 
                 Socket clientSocket = ss.accept();
                 ez.add(clientSocket);
+                }
+                new MyThread().start();
 
             }
-            new MyThread().start();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,10 +43,15 @@ public class Server {
         return ez;
     }
 
+    public static void resetList() {
+        ez.clear();
+    }
+
 }
 
 class MyThread extends Thread {
     ArrayList<Socket> ips = Server.getList();
+    
 
     private Socket clientSocket1;
     private Socket clientSocket2;
@@ -56,6 +61,7 @@ class MyThread extends Thread {
         System.out.println(ips.get(1));
         this.clientSocket1 = ips.get(0);
         this.clientSocket2 = ips.get(1);
+        Server.resetList();
     }
 
     @Override
@@ -83,19 +89,7 @@ class MyThread extends Thread {
             ObjectInputStream in2 = new ObjectInputStream(is2);
 
             
-            /*
-             * if (in.readBoolean()) {
-             * String playerName = in.readUTF();
-             * String playerScore = in.readUTF();
-             * System.out.println(playerName);
-             * System.out.println(playerScore);
-             * PlayerDAO.insertPlayer(playerName, playerScore);
-             * } else {
-             * ObservableList<PlayerBD> playersList = PlayerDAO.searchPlayers();
-             * out.writeObject(new ArrayList<PlayerBD>(playersList));
-             * out.flush();
-             * }
-             */
+            
             while (true) {
                 DIRECTION player1 = (DIRECTION) in1.readObject();
                 out2.writeObject(player1);
@@ -108,7 +102,6 @@ class MyThread extends Thread {
 
         } catch (Exception e) {
             System.out.println("Connection reset");
-            e.printStackTrace();
             try {
                 clientSocket1.close();
                 clientSocket2.close();

@@ -256,13 +256,16 @@ public class GameMap {
     public boolean checkUpGhost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
             if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
+                System.out.println("MAKAKAAKAKAKA");
                 return false;
             }
 
         }
         for (Rectangle sprite : nodes) {
             if (withinX(coords, sprite)) {
+
                 if ((coords.get(1) <= sprite.getY() + sprite.getHeight()) && (coords.get(1) >= sprite.getY())) {
+                    
                     return false;
                 }
             }

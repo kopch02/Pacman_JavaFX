@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import menu.scores.ScoresController;
 
 public class MenuController {
     @FXML
@@ -27,6 +28,8 @@ public class MenuController {
     // multi
     @FXML
     TextField ipField;
+    @FXML
+    TextField ipFieldScores;
 
     @FXML
     Button okButton;
@@ -35,6 +38,8 @@ public class MenuController {
 
     @FXML
     Label ipLabel;
+    @FXML
+    Label ipLabelScores;
 
     @FXML
     public void letsGo(ActionEvent actionEvent) {
@@ -59,7 +64,13 @@ public class MenuController {
 
     @FXML
     public void seeScores(ActionEvent actionEvent) {
-        FXMLLoad("scores/ScoresView.fxml", 3);
+        ipLabelScores.setVisible(true);
+        ipFieldScores.setVisible(true);
+        if (scoresButton.getText().equals("Enter")) {
+            FXMLLoad("scores/ScoresView.fxml", 3);
+        } else {
+            scoresButton.setText("Enter");
+        }
     }
 
     private void FXMLLoad(String path, int actionCode) {
@@ -68,16 +79,18 @@ public class MenuController {
         try {
             pane = fxmlLoader.load();
             mainRoot.getChildren().setAll(pane);
-            GamePlayController gamePlayController = (GamePlayController) fxmlLoader.getController();
             if (actionCode == 1) {
+                GamePlayController gamePlayController = (GamePlayController) fxmlLoader.getController();
                 gamePlayController.initSingle();
                 gamePlayController.setIp(ipField.getText());
             } else if (actionCode == 2) {
+                GamePlayController gamePlayController = (GamePlayController) fxmlLoader.getController();
                 gamePlayController.setIp(ipField.getText());
                 gamePlayController.initMulti();
                 System.out.println(ipField.getText());
-            } else {
-                
+            } else if (actionCode == 3) {
+                ScoresController scoresController = (ScoresController) fxmlLoader.getController();
+                scoresController.setIP(ipFieldScores.getText());
             }
         } catch (IOException e) {
             e.printStackTrace();
