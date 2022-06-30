@@ -66,7 +66,6 @@ public class ScoresController {
             pane = fxmlLoader.load();
             mainRoot.getChildren().setAll(pane);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -92,9 +91,7 @@ public class ScoresController {
                 ObservableList<PlayerBD> playersData = netDB.receivePLFromServer();
                 populatePlayers(playersData);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
             } catch (IOException e) {
-                System.out.println(e.getMessage());
             }
         }
     }

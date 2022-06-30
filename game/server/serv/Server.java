@@ -106,7 +106,6 @@ class MyThread extends Thread {
                 clientSocket1.close();
                 clientSocket2.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
             }
         }
     }

@@ -28,7 +28,6 @@ public class NetDB {
             out = new DataOutputStream(s.getOutputStream());
             in = new ObjectInputStream(s.getInputStream());
         } catch (Exception e) {
-            e.printStackTrace();
         } finally {
           
         }
@@ -54,10 +53,8 @@ public class NetDB {
 
             return oPlayerList;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw e;
         } catch (IOException e) {
-            e.printStackTrace();
             throw e;
         }
     }
@@ -69,7 +66,6 @@ public class NetDB {
             out.writeUTF(score);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

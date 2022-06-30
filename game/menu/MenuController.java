@@ -93,7 +93,6 @@ public class MenuController {
                 scoresController.setIP(ipFieldScores.getText());
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
