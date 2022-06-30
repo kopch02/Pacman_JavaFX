@@ -82,7 +82,6 @@ public class DeathController {
             pane = fxmlLoader.load();
             mainRoot.getChildren().setAll(pane);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

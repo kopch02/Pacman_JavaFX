@@ -68,7 +68,6 @@ class MyThreadDB extends Thread {
             try {
                 clientSocket.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
             }
         }
     }

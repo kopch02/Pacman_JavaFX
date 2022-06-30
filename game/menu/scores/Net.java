@@ -27,7 +27,6 @@ public class Net {
             in = new ObjectInputStream(s.getInputStream());
             
         } catch (Exception e) {
-            e.printStackTrace();
         } finally {
 
         }
@@ -58,9 +57,7 @@ public class Net {
         try {
             return (DIRECTION) in.readObject();
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
         }
         return DIRECTION.up;
     }
