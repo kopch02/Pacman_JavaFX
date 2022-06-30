@@ -108,17 +108,17 @@ public class GamePlayController {
             System.out.println("EQUALS");
             player1 = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap, false);
             player2 = new Player(new Image(new File("other/ghosts/red/up.png").toURI().toString()), gameMap, true);
-            player1.setDrawPosition(320, 350);
+            player1.setDrawPosition(205, 350);
             player1.setDirection(DIRECTION.right);
-            player2.setDrawPosition(320, 225);
+            player2.setDrawPosition(425, 225);
             player2.setDirection(DIRECTION.left);
         } else {
             System.out.println("NNOOOOOOOT EQUALS");
             player1 = new Player(new Image(new File("other/ghosts/red/up.png").toURI().toString()), gameMap, true);
             player2 = new Player(new Image(new File("other/up.gif").toURI().toString()), gameMap, false);
-            player1.setDrawPosition(320, 225);
+            player1.setDrawPosition(425, 225);
             player1.setDirection(DIRECTION.left);
-            player2.setDrawPosition(320, 350);
+            player2.setDrawPosition(205, 350);
             player2.setDirection(DIRECTION.right);
         }
 
