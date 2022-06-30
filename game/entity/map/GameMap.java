@@ -315,23 +315,13 @@ public class GameMap {
     }
 
     public boolean checkLoseMulti(Player player, Player enemy) {
-        long now = System.currentTimeMillis();
 
         Shape intersect = Shape.intersect(player.getSprite(), enemy.getSprite());
         if (intersect.getBoundsInLocal().getWidth() != -1) {
-            if (angry) {
-                reSpawnTime = now + 3000;
-                enemy.setDrawPosition(1000, 1000);
-                enemy.switchGoSpawn();
-            } else {
-                return true;
-            }
+           
+            return true;
         }
-        if ((reSpawnTime < now) && enemy.getGoSpawn()) {
-            enemy.goSpawn();
-            enemy.switchGoSpawn();
-        }
-
+        
         return false;
     }
 
