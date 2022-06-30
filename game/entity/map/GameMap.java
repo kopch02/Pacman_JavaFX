@@ -97,8 +97,8 @@ public class GameMap {
         nodes.add(new Rectangle(655, 0, 15, 200));
 
         // клетка в центре
-        nodes.add(new Rectangle(245, 265, 72, 10));// лево верх
-        nodes.add(new Rectangle(357, 265, 68, 10));// право верх
+        nodes.add(new Rectangle(245, 265, 70, 10));// лево верх
+        nodes.add(new Rectangle(355, 265, 70, 10));// право верх
         nodes.add(new Rectangle(245, 275, 10, 65));// лево
         nodes.add(new Rectangle(415, 275, 10, 65));// право
         nodes.add(new Rectangle(245, 340, 180, 10));// низ
@@ -113,8 +113,8 @@ public class GameMap {
         crossroad.add(new Rectangle(280, 225, 40, 40));
         crossroad.add(new Rectangle(350, 225, 40, 40));
 
-        crossroad.add(new Rectangle(317, 275, 40, 40));
-        crossroad.add(new Rectangle(317, 300, 40, 40));
+        crossroad.add(new Rectangle(315, 275, 40, 40));
+        crossroad.add(new Rectangle(315, 300, 40, 40));
 
     }
 
@@ -256,7 +256,6 @@ public class GameMap {
     public boolean checkUpGhost(ArrayList<Double> coords) {
         for (Rectangle sprite : crossroad) {
             if ((coords.get(0) == sprite.getX()) && (coords.get(1) == sprite.getY())) {
-                System.out.println("MAKAKAAKAKAKA");
                 return false;
             }
 

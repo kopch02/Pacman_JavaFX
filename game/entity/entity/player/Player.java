@@ -14,7 +14,8 @@ public class Player extends Entity {
     Image leftImage;
     Image rightImage;
     float speed = 2.5f;
-    boolean Dead = false;
+    boolean DeadByGhost = false;
+    boolean DeadByPlayer = false;
     boolean isGhost;
     boolean goSpawn = false;
     static String name;
@@ -118,12 +119,20 @@ public class Player extends Entity {
         setDrawPosition((float) curPos.getX() + speed, (float) curPos.getY());
     }
 
-    public void setDead(boolean t) {
-        Dead = t;
+    public void setDeadByGhost(boolean t) {
+        DeadByGhost = t;
     }
 
-    public boolean isDead() {
-        return Dead;
+    public boolean isDeadByGhost() {
+        return DeadByGhost;
+    }
+
+    public void setDeadByPlayer(boolean t) {
+        DeadByPlayer = t;
+    }
+
+    public boolean isDeadByPlayer() {
+        return DeadByPlayer;
     }
 
 }

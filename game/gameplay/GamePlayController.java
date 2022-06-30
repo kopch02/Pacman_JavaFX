@@ -129,6 +129,9 @@ public class GamePlayController {
         player2.setMove(true);
         renderer.addEntity(player1);
         renderer.addEntity(player2);
+        renderer.addEntity(pinkGhost);
+        renderer.addEntity(blueGhost);
+        
         Platform.runLater(new TimerThreadMulti(player1, player2, ip));
     }
 
@@ -146,7 +149,7 @@ public class GamePlayController {
 
     private boolean isDying() {
         if (multi) {
-            if (this.player1.isDead() || this.player2.isDead()) {
+            if (this.player1.isDeadByGhost() || this.player1.isDeadByPlayer() || this.player2.isDeadByGhost() || this.player2.isDeadByPlayer()) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
                 AnchorPane pane;
                 try {
@@ -168,7 +171,7 @@ public class GamePlayController {
             }
             return false;
         } else {
-            if (this.player1.isDead()) {
+            if (this.player1.isDeadByGhost()) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../menu/death/DeathView.fxml"));
                 AnchorPane pane;
                 try {
@@ -223,19 +226,27 @@ public class GamePlayController {
                         player2.update(player2.getCurDirection());
                     }
                     renderer.render();
+                    ghostList.add(pinkGhost);
+                    ghostList.add(blueGhost);
                     if (!player1.getIsGhost()) {
                         gameMap.eatpoint(player1.getSprite(), renderer);
-                        player1.setDead(gameMap.checkLoseMulti(player1, player2));
+                        pinkGhost.update(player1.getCenter());
+                        blueGhost.update(player1.getCenter(), redGhost.getCenter());
+                        player1.setDeadByPlayer(gameMap.checkLoseMulti(player1, player2));
+                        player1.setDeadByGhost(gameMap.checkLose(player1.getSprite(), ghostList));
                     } else {
                         gameMap.eatpoint(player2.getSprite(), renderer);
-                        player2.setDead(gameMap.checkLoseMulti(player1, player2));
+                        pinkGhost.update(player2.getCenter());
+                        blueGhost.update(player2.getCenter(), redGhost.getCenter());
+                        player2.setDeadByPlayer(gameMap.checkLoseMulti(player1, player2));
+                        player2.setDeadByGhost(gameMap.checkLose(player2.getSprite(), ghostList));
                     }
                     scorelLabel.setText(gameMap.getScore());
                     if (isDying()) {
                         net.closeCon();
                         stop();
                     }
-
+                    ghostList.clear();
                 }
             };
             timer.start();
@@ -262,12 +273,11 @@ public class GamePlayController {
                     ghostList.add(blueGhost);
                     gameMap.eatpoint(player1.getSprite(), renderer);
                     scorelLabel.setText(gameMap.getScore());
-                    player1.setDead(gameMap.checkLose(player1.getSprite(), ghostList));
+                    player1.setDeadByGhost(gameMap.checkLose(player1.getSprite(), ghostList));
                     if (isDying()) {
                         stop();
                     }
                     ghostList.clear();
-                    gameMap.create(context);
 
                 }
             };
